@@ -1,0 +1,26 @@
+# Registers and applies actions to cart items with some special filter rules.
+- type: "action"
+  handler: { class: "WooCommerceCartFilter", method: "applyFilter" }
+  tags:
+    0: { tag: "woocommerce_before_cart" }
+
+- type: "action"
+  handler: { class: "WooCommerceCheckoutFilter", method: "applyFilter" }
+  tags:
+    0: { tag: "woocommerce_checkout_process" }
+
+# Registers filters to load a media from an external URL rather than WordPress medias.
+- type: "filter"
+  handler: { class: "WooCommerceImageFilter", method: "applySrcFilter" }
+  tags:
+    0: { args: 2, tag: "wp_get_attachment_image_src" }
+
+- type: "filter"
+  handler: { class: "WooCommerceImageFilter", method: "applyHtmlFilter" }
+  tags:
+    0: { args: 1, tag: "woocommerce_single_product_image_html" }
+
+- type: "filter"
+  handler: { class: "WooCommerceImageFilter", method: "applyCartHtmlFilter" }
+  tags:
+    0: { args: 2, tag: "woocommerce_cart_item_thumbnail" }
