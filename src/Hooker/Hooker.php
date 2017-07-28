@@ -1,6 +1,6 @@
 <?php
 /**
- * Main static class used to hook specific plugin modules into
+ * Main class used to hook specific plugin modules into
  * WordPress core. All the hooks are read from an YAML file contained into a "modules" subfolder.
  *
  * @author Skazza
