@@ -1,6 +1,6 @@
 {
-    "name": "skazza/wp-modular-plugin",
-    "description": "A Modular Plugin For Wordpress.",
+    "name": "skazza/wp-modular-plugin-core",
+    "description": "Core for WP Modular, a Modular Plugin for WordPress.",
     "keywords": [
         "wp",
         "wordpress",
