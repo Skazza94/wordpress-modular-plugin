@@ -19,7 +19,7 @@ abstract class Factory
     }
 
     protected function setSearchPath() {
-        return dirname(__FILE__);
+        $this->searchPath = dirname(__FILE__);
     }
 
     public static function getInstance()
