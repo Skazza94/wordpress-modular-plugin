@@ -16,7 +16,7 @@ class ViewDispatcher implements ViewContract
         $configs = app('config')->get('wp_modular.view');
 
         $this->supported = $configs['supported_formats'];
-        $this->VIEW_PATH = $rootPath . DIRECTORY_SEPARATOR . $configs['path'] . DIRECTORY_SEPARATOR;
+        $this->VIEW_PATH = $rootPath . $configs['path'] . DIRECTORY_SEPARATOR;
     }
 
     public function render($viewName, $prefix = '', $params = array(), $print = true)

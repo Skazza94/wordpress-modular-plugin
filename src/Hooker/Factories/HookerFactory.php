@@ -17,6 +17,11 @@ class HookerFactory extends Factory
         parent::__construct();
     }
 
+    protected function setSearchPath()
+    {
+        $this->searchPath = dirname(dirname(__FILE__));
+    }
+
     protected function processName($name)
     {
         return ucfirst(strtolower($name)) . 'Hooker';
