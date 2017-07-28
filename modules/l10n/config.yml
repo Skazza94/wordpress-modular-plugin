@@ -1,5 +1,0 @@
-# Loads the plugin language domain from localization.
-- type: "action"
-  handler: { class: "L10n", method: "loadPluginLanguageDomain" }
-  tags:
-    0: { tag: "plugins_loaded" }
