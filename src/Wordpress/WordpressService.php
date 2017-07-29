@@ -36,7 +36,7 @@ class WordpressService extends Service
 
     public function registerCronEvent($tag, $interval)
     {
-        $this->cronEvents = array_merge($this->cronEvents, array($tag => $interval));
+        $this->cronEvents += array($tag => $interval);
     }
 
     public function getCronEvents()

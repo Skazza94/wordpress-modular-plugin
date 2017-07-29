@@ -34,7 +34,7 @@ abstract class FunctionHooker extends Hooker
             $tag = (string) $hook['tag'];
 
             if((array_key_exists('cron', $hook) && !empty($hook['cron'])) && strpos(static::class, 'ActionHooker') !== false) /* This is a cron task, register it into CronManager */
-                wp_service()->registerEvent($tag, (string) $hook['cron']);
+                wp_service()->registerCronEvent($tag, (string) $hook['cron']);
 
             $priority = (array_key_exists('priority', $hook) && !empty($hook['priority'])) ? (int) $hook['priority'] : 10; /* Read the priority, if it's defined. If not set default value to 10. */
             $args = (array_key_exists('args', $hook) && !empty($hook['args'])) ? (int) $hook['args'] : 1; /* Read the arguments to pass to the function, if it's defined. If not set default value to 1. */
