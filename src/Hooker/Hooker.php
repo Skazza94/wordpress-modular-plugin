@@ -67,14 +67,19 @@ class Hooker
         if(!$filesystem->has($fileName)) /* If it's not there, exit */
             return null;
 
-        $hooks = app('cache')->remember(sha1($fileName), app('env')->get('CACHE_MINUTES'), function() use ($filesystem, $fileName) {
+        if(app('env')->get('USE_CACHE'))
+            return app('cache')->remember(sha1($fileName), app('env')->get('CACHE_MINUTES'), function () use ($filesystem, $fileName) {
+                try {
+                    return Yaml::parse($filesystem->read($fileName));
+                } catch (ParseException $e) {
+                    return null;
+                }
+            });
+        else
             try {
                 return Yaml::parse($filesystem->read($fileName));
-            } catch(ParseException $e) {
+            } catch (ParseException $e) {
                 return null;
             }
-        });
-
-        return $hooks;
     }
 }
