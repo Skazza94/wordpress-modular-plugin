@@ -11,6 +11,7 @@ namespace WPModular\Foundation\Hooker;
 use Symfony\Component\DependencyInjection\Exception\ServiceNotFoundException;
 use WPModular\Modules\ModuleDispatcher;
 use WPModular\Contracts\Hooker\HookerContract;
+use WPModular\Modules\ModuleRegisterer;
 
 abstract class Hooker implements HookerContract
 {
@@ -57,32 +58,10 @@ abstract class Hooker implements HookerContract
             return null;
 
         if(array_key_exists('class', $handler) && array_key_exists('method', $handler)) { /* This is a ("ControllerName", "method") type */
-            $id = $this->registerModuleInContainer($handler['class'], (!empty($handler['properties'])) ? $handler['properties'] : array());
+            $id = ModuleRegisterer::getInstance()->registerModule($handler['class'], (array_key_exists('properties', $handler)) ? $handler['properties'] : array());
             return array(ModuleDispatcher::class, $id . '~' . $handler['method']);
         }
 
         return $handler['function'];
-    }
-
-    protected function registerModuleInContainer($name, $properties)
-    {
-        $sArgs = (!empty($properties)) ? base64_encode(serialize($properties)) : 'N';
-        $id = sha1($name . $sArgs);
-        try {
-            app()->getService($id);
-        } catch(ServiceNotFoundException $e) {
-            $ns = config('hooker.module_ns');
-            $def = app()->registerService($id, "{$ns}\\{$name}");
-            $def->addArgument(app());
-
-            if(!empty($properties))
-                foreach ($properties as $key => $property)
-                    $def->addMethodCall(
-                        'set' . ucfirst(strtolower($key)),
-                        (is_array($property)) ? $property : array($property)
-                    );
-        }
-
-        return $id;
     }
 }

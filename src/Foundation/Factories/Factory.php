@@ -5,10 +5,10 @@ namespace WPModular\Foundation\Factories;
 use Gnugat\NomoSpaco\File\FileRepository;
 use Gnugat\NomoSpaco\FqcnRepository;
 use Gnugat\NomoSpaco\Token\ParserFactory;
+use WPModular\Foundation\View\Singleton;
 
-abstract class Factory
+abstract class Factory extends Singleton
 {
-    protected static $_INSTANCE = null;
     protected $fqnsService = null;
     protected $searchPath = null;
 
@@ -19,11 +19,6 @@ abstract class Factory
     }
 
     abstract protected function setSearchPath();
-
-    public static function getInstance()
-    {
-        return (is_null(static::$_INSTANCE)) ? new static() : static::$_INSTANCE;
-    }
 
     protected function getFQNameForClass($className)
     {
