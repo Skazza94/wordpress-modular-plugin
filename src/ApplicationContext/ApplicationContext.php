@@ -13,13 +13,13 @@ class ApplicationContext implements ApplicationContextContract
     public function __construct($root)
     {
         $this->ROOT = $root;
-        $this->container = new ContainerBuilder();
+        $this->container = new ContainerBuilder;
     }
 
     public function bootstrap()
     {
         /* Loads the helpers. */
-        include_once(dirname(dirname(__FILE__)) . DIRECTORY_SEPARATOR . 'Support' . DIRECTORY_SEPARATOR . 'helpers.php');
+        include_once(dirname(dirname(__FILE__)) . DIRECTORY_SEPARATOR . 'helpers.php');
 
         /* Brutally reads the services before loading the proper config manager */
         $services = require_once($this->ROOT . DIRECTORY_SEPARATOR . 'config' . DIRECTORY_SEPARATOR . 'services.php');

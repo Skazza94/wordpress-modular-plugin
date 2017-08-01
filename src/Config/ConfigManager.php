@@ -55,6 +55,10 @@ class ConfigManager implements ConfigContract
     public function get($configString)
     {
         list($file, $configPath) = $this->resolveConfigString($configString);
+
+        if(empty($configPath))
+            return $this->all($configString);
+
         $config = $this->getConfig($file);
         return (!is_null($config)) ? $this->getValue($config->toArray(), $configPath) : null;
     }

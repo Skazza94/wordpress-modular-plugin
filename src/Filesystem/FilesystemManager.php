@@ -13,7 +13,7 @@ class FilesystemManager implements FilesystemContract
 
     private function getFilesystemByConfig($name)
     {
-        $config = app('config')->get("filesystem.{$name}");
+        $config = config("filesystem.{$name}");
         if(!array_key_exists('config', $config)) $config['config'] = null;
         return array_values($config);
     }
@@ -35,7 +35,7 @@ class FilesystemManager implements FilesystemContract
         if(!array_key_exists($name, $this->storages))
             $this->storages[$name] = $this->create($name);
 
-        return (!is_null($this->storages[$name])) ? $this->storages[$name] : null;
+        return $this->storages[$name];
     }
 
     /* Each new supported Driver should be added here */

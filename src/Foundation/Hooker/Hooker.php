@@ -71,7 +71,7 @@ abstract class Hooker implements HookerContract
         try {
             app()->getService($id);
         } catch(ServiceNotFoundException $e) {
-            $ns = app('config')->get('hooker.module_ns');
+            $ns = config('hooker.module_ns');
             $def = app()->registerService($id, "{$ns}\\{$name}");
             $def->addArgument(app());
 

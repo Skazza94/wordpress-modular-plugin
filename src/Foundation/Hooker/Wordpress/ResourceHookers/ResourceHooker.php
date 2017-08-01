@@ -23,7 +23,7 @@ abstract class ResourceHooker extends Hooker
      */
     public function __construct()
     {
-        $this->VERSION = app('env')->get('VERSION');
+        $this->VERSION = env('VERSION');
     }
 
     /**

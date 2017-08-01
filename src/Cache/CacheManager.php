@@ -10,7 +10,7 @@ class CacheManager implements CacheContract
 
     public function __construct($rootPath)
     {
-        $configs = app('config')->get('wp_modular.cache');
+        $configs = config('wp_modular.cache');
         $this->cache = new FilesystemCache(
             $configs['namespace'],
             $configs['ttl'],

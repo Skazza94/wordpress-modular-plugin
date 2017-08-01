@@ -23,7 +23,7 @@ abstract class PluginHooker extends Hooker
      */
     public function __construct()
     {
-        $this->FILE = app()->getRootPath() . DIRECTORY_SEPARATOR . app('env')->get('PLUGIN_SLUG') . '.php';
+        $this->FILE = app()->getRootPath() . DIRECTORY_SEPARATOR . env('PLUGIN_SLUG') . '.php';
     }
 
     /**

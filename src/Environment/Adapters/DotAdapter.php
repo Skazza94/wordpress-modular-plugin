@@ -23,7 +23,7 @@ class DotAdapter implements EnvironmentContract
 
     public function get($key)
     {
-        return env($key);
+        return env_get($key);
     }
 
     public function set($key, $value)
@@ -32,8 +32,8 @@ class DotAdapter implements EnvironmentContract
     }
 }
 
-if (!function_exists('env')) {
-    function env($key, $default = null)
+if (!function_exists('env_get')) {
+    function env_get($key, $default = null)
     {
         $value = getenv($key);
 

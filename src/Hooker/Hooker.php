@@ -17,7 +17,7 @@ class Hooker
 
     public function __construct()
     {
-        $this->config = app('config')->all('hooker');
+        $this->config = config('hooker');
     }
 
     /**
@@ -28,7 +28,7 @@ class Hooker
     public function hookPlugin()
     {
         /* Get all "modules" subfolders. */
-        $filesystem = app('filesystem')->storage('plugin');
+        $filesystem = storage('plugin');
         $subfolders = $filesystem->listContents($this->config['modules_path']);
 
         /* Iterates over them */
@@ -61,14 +61,14 @@ class Hooker
      */
     private function readConfigFile($folder)
     {
-        $filesystem = app('filesystem')->storage('plugin');
+        $filesystem = storage('plugin');
         $fileName = $folder . DIRECTORY_SEPARATOR . $this->config['config_name'] . '.' . $this->config['config_format']; /* Build the complete path + filename */
 
         if(!$filesystem->has($fileName)) /* If it's not there, exit */
             return null;
 
-        if(app('env')->get('USE_CACHE'))
-            return app('cache')->remember(sha1($fileName), app('env')->get('CACHE_MINUTES'), function () use ($filesystem, $fileName) {
+        if(env('USE_CACHE'))
+            return cache()->remember(sha1($fileName), env('CACHE_MINUTES'), function () use ($filesystem, $fileName) {
                 try {
                     return Yaml::parse($filesystem->read($fileName));
                 } catch (ParseException $e) {

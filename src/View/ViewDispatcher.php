@@ -3,9 +3,8 @@
 namespace WPModular\View;
 
 use WPModular\View\Factories\ViewAdapterFactory;
-use WPModular\Contracts\View\ViewContract as ViewContract;
 
-class ViewDispatcher implements ViewContract
+class ViewDispatcher
 {
     private $VIEW_PATH = null;
     private $adapters = array();
@@ -13,20 +12,22 @@ class ViewDispatcher implements ViewContract
 
     public function __construct($rootPath)
     {
-        $configs = app('config')->get('wp_modular.view');
+        $configs = config('wp_modular.view');
 
         $this->supported = $configs['supported_formats'];
         $this->VIEW_PATH = $rootPath . $configs['path'] . DIRECTORY_SEPARATOR;
     }
 
-    public function render($viewName, $prefix = '', $params = array(), $print = true)
+    public function render($viewName, $params = array(), $print = true)
     {
+        $tokens = explode('/', $viewName);
+        $viewName = array_pop($tokens);
         $ext = pathinfo($viewName, PATHINFO_EXTENSION);
 
         if(!in_array($ext, $this->supported))
             return null;
 
-        return $this->renderByType($ext, $viewName, $prefix, $params, $print);
+        return $this->renderByType($ext, $viewName, implode('/', $tokens), $params, $print);
     }
 
     private function renderByType($type, $viewName, $prefix, $params, $print)

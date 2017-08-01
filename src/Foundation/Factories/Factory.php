@@ -14,7 +14,7 @@ abstract class Factory
 
     protected function __construct()
     {
-        $this->fqnsService = new FqcnRepository(new FileRepository(), new ParserFactory());
+        $this->fqnsService = new FqcnRepository(new FileRepository, new ParserFactory);
         $this->setSearchPath();
     }
 

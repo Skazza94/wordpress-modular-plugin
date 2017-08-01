@@ -4,10 +4,17 @@ namespace WPModular\Config;
 
 use WPModular\Foundation\Services\Service;
 
+/**
+ * @method mixed get(string $configString)
+ * @method boolean has(string $configString)
+ * @method array all(string $configString)
+ */
 class ConfigService extends Service
 {
     public function bootstrap()
     {
-        $this->addMixin(new ConfigManager($this->app->getRootPath()));
+        $this->addMixin(
+            new ConfigManager($this->app->getRootPath())
+        );
     }
 }
