@@ -8,7 +8,6 @@
  */
 namespace WPModular\Foundation\Hooker;
 
-use Symfony\Component\DependencyInjection\Exception\ServiceNotFoundException;
 use WPModular\Modules\ModuleDispatcher;
 use WPModular\Contracts\Hooker\HookerContract;
 use WPModular\Modules\ModuleRegisterer;
