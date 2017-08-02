@@ -15,7 +15,17 @@ class TwigAdapter extends ViewAdapter
 
     public function render($viewName, $prefix = '', $params = array(), $print = true)
     {
-        $context = array_merge(Timber::get_context(), $params, array('wp_service' => wp_service(), 'url' => url()));
+        $context = array_merge(
+            Timber::get_context(),
+            $params,
+            array(
+                'cache' => cache(),
+                'config' => app('config'),
+                'env' => app('env'),
+                'l10n' => app('l10n'),
+                'url' => url()
+            )
+        );
         $out = Timber::fetch($this->buildPrefix($prefix) . $viewName, $context);
         if($print)
             echo $out;
