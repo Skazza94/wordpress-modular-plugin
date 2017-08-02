@@ -16,7 +16,7 @@ class ConfigService extends Service
         $this->addMixin(
             $this->app->create(
                 ConfigManager::class,
-                array($this->app->getRootPath())
+                $this->app->getRootPath()
             )
         );
     }

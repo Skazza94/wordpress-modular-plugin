@@ -16,7 +16,7 @@ class L10nService extends Service
         $this->addMixin(
             $this->app->create(
                 TranslationManager::class,
-                array(env('PLUGIN_NAME'))
+                env('PLUGIN_NAME')
             )
         );
     }
@@ -26,7 +26,7 @@ class L10nService extends Service
         load_plugin_textdomain(
             env('PLUGIN_NAME'),
             false,
-            wp_service()->getPluginName() . DIRECTORY_SEPARATOR . 'languages'
+            wp_service()->getPluginName() . DIRECTORY_SEPARATOR . config('wp_modular.l10n.path')
         );
     }
 }

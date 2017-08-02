@@ -14,7 +14,7 @@ class ViewService extends Service
         $this->addMixin(
             $this->app->create(
                 ViewDispatcher::class,
-                array($this->app->getRootPath())
+                $this->app->getRootPath()
             )
         );
     }

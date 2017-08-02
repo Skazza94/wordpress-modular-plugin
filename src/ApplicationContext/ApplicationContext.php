@@ -39,11 +39,12 @@ class ApplicationContext implements ApplicationContextContract
                 $this->singleton(array_pop(explode('\\', $provider)), $provider, array($this))->boot();
     }
 
-    private function register($id, $className, $arguments = array())
+    private function register($id, $className, $arguments)
     {
         $definition = $this->container->register($id, $className);
 
-        if(!empty($arguments) && is_array($arguments))
+        $arguments = (!is_array($arguments)) ? array($arguments) : $arguments;
+        if(!empty($arguments))
             foreach($arguments as $argument)
                 $definition->addArgument($argument);
 

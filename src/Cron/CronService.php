@@ -17,7 +17,9 @@ class CronService extends Service
         register_deactivation_hook($file, array($this, 'unregisterEvents'));
 
         $this->addMixin(
-            $this->app->create(CronManager::class)
+            $this->app->create(
+                CronManager::class
+            )
         );
     }
 }
