@@ -8,12 +8,11 @@
  */
 namespace WPModular\Foundation\Hooker;
 
-use Symfony\Component\DependencyInjection\Exception\ServiceNotFoundException;
 use WPModular\Modules\ModuleDispatcher;
 use WPModular\Contracts\Hooker\HookerContract;
 use WPModular\Modules\ModuleRegisterer;
 
-abstract class Hooker implements HookerContract
+abstract class Hook implements HookerContract
 {
     /**
      * Facade method used to communicate with other classes.
@@ -28,7 +27,7 @@ abstract class Hooker implements HookerContract
         if(!array_key_exists('handler', $data))
             return;
 
-        $handler = $this->parseHandler($data['handler']);
+        $handler = $this->parseHandler($data['handler'], $data['namespace']);
 
         $this->hookSpecific($data, $handler);
     }
@@ -52,13 +51,13 @@ abstract class Hooker implements HookerContract
      * @return array|string|null The parsed handler.
      * @author Skazza
      */
-    protected function parseHandler($handler)
+    protected function parseHandler($handler, $namespace)
     {
         if(is_null($handler) || empty($handler))
             return null;
 
         if(array_key_exists('class', $handler) && array_key_exists('method', $handler)) { /* This is a ("ControllerName", "method") type */
-            $id = ModuleRegisterer::getInstance()->registerModule($handler['class'], (array_key_exists('properties', $handler)) ? $handler['properties'] : array());
+            $id = ModuleRegisterer::getInstance()->registerModule($namespace . '\\' . $handler['class'], (array_key_exists('properties', $handler)) ? $handler['properties'] : array());
             return array(ModuleDispatcher::class, $id . '~' . $handler['method']);
         }
 

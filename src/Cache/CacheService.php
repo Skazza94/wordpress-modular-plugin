@@ -19,7 +19,10 @@ class CacheService extends Service
     public function bootstrap()
     {
         $this->addMixin(
-            new CacheManager($this->app->getRootPath())
+            $this->app->create(
+                CacheManager::class,
+                array($this->app->getRootPath())
+            )
         );
     }
 }

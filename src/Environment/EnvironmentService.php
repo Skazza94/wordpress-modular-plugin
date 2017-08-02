@@ -14,7 +14,10 @@ class EnvironmentService extends Service
     public function bootstrap()
     {
         $this->addMixin(
-            new DotAdapter($this->app->getRootPath())
+            $this->app->create(
+                DotAdapter::class,
+                array($this->app->getRootPath())
+            )
         );
     }
 }

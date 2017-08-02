@@ -1,6 +1,6 @@
 <?php
 
-namespace WPModular\Foundation\View;
+namespace WPModular\Foundation\Support;
 
 
 class Singleton

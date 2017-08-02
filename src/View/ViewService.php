@@ -12,7 +12,10 @@ class ViewService extends Service
     public function bootstrap()
     {
         $this->addMixin(
-            new ViewDispatcher($this->app->getRootPath())
+            $this->app->create(
+                ViewDispatcher::class,
+                array($this->app->getRootPath())
+            )
         );
     }
 }

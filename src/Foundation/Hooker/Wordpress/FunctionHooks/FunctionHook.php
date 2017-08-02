@@ -5,11 +5,11 @@
  *
  * @author Skazza
  */
-namespace WPModular\Foundation\Hooker\Wordpress\FunctionHookers;
+namespace WPModular\Foundation\Hooker\Wordpress\FunctionHooks;
 
-use WPModular\Foundation\Hooker\Hooker;
+use WPModular\Foundation\Hooker\Hook;
 
-abstract class FunctionHooker extends Hooker
+abstract class FunctionHook extends Hook
 {
     /**
      * Abstract method implemented from Hooker class.
@@ -33,8 +33,8 @@ abstract class FunctionHooker extends Hooker
                 continue;
             $tag = (string) $hook['tag'];
 
-            if((array_key_exists('cron', $hook) && !empty($hook['cron'])) && strpos(static::class, 'ActionHooker') !== false) /* This is a cron task, register it into CronManager */
-                wp_service()->registerCronEvent($tag, (string) $hook['cron']);
+            if((array_key_exists('cron', $hook) && !empty($hook['cron'])) && strpos(static::class, 'ActionHook') !== false) /* This is a cron task, register it into CronManager */
+                cron()->registerCronEvent($tag, (string) $hook['cron']);
 
             $priority = (array_key_exists('priority', $hook) && !empty($hook['priority'])) ? (int) $hook['priority'] : 10; /* Read the priority, if it's defined. If not set default value to 10. */
             $args = (array_key_exists('args', $hook) && !empty($hook['args'])) ? (int) $hook['args'] : 1; /* Read the arguments to pass to the function, if it's defined. If not set default value to 1. */

@@ -14,7 +14,10 @@ class ConfigService extends Service
     public function bootstrap()
     {
         $this->addMixin(
-            new ConfigManager($this->app->getRootPath())
+            $this->app->create(
+                ConfigManager::class,
+                array($this->app->getRootPath())
+            )
         );
     }
 }

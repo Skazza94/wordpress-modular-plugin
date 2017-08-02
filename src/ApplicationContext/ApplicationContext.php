@@ -4,6 +4,7 @@ namespace WPModular\ApplicationContext;
 
 use Symfony\Component\DependencyInjection\ContainerBuilder;
 use WPModular\Contracts\ApplicationContext\ApplicationContextContract;
+use WPModular\Foundation\Exceptions\NotSingletonException;
 
 class ApplicationContext implements ApplicationContextContract
 {
@@ -24,16 +25,49 @@ class ApplicationContext implements ApplicationContextContract
         /* Brutally reads the services before loading the proper config manager */
         $services = require_once($this->ROOT . DIRECTORY_SEPARATOR . 'config' . DIRECTORY_SEPARATOR . 'services.php');
         foreach($services as $alias => $serviceName)
-            $this->registerService($alias, $serviceName)
-                 ->addArgument($this);
+            $this->register($alias, $serviceName, array($this));
+
+        /* Registers and Handlers ModuleProviders */
+        $this->handleModuleProviders();
     }
 
-    public function registerService($id, $className)
+    private function handleModuleProviders()
     {
-        return $this->container->register($id, $className);
+        $providers = $this->get('config')->get('hooker.providers');
+        if(!empty($providers) && is_array($providers))
+            foreach($providers as $provider)
+                $this->singleton(array_pop(explode('\\', $provider)), $provider, array($this))->boot();
     }
 
-    public function getService($id)
+    private function register($id, $className, $arguments = array())
+    {
+        $definition = $this->container->register($id, $className);
+
+        if(!empty($arguments) && is_array($arguments))
+            foreach($arguments as $argument)
+                $definition->addArgument($argument);
+
+        return $definition;
+    }
+
+    public function singleton($id, $className, $arguments = array())
+    {
+        if($this->container->has($id))
+            return $this->get($id);
+
+        $this->register($id, $className, $arguments);
+        return $this->get($id);
+    }
+
+    public function create($className, $arguments = array())
+    {
+        $id = sha1(microtime() . uniqid());
+
+        $this->register($id, $className, $arguments);
+        return $this->get($id);
+    }
+
+    public function get($id)
     {
         return $this->container->get($id);
     }

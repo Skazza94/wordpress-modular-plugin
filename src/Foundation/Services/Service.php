@@ -4,11 +4,11 @@ namespace WPModular\Foundation\Services;
 
 use WPModular\Contracts\ApplicationContext\ApplicationContextContract;
 use WPModular\Contracts\Services\ServiceContract;
-use WPModular\Foundation\Proxies\Traits\Proxable;
+use WPModular\Foundation\Macros\Macroable;
 
 abstract class Service implements ServiceContract
 {
-    use Proxable;
+    use Macroable;
 
     protected $app = null;
 

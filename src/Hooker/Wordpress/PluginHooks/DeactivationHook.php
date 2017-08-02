@@ -4,11 +4,11 @@
  *
  * @author Skazza
  */
-namespace WPModular\Hooker\Wordpress\PluginHookers;
+namespace WPModular\Hooker\Wordpress\PluginHooks;
 
-use WPModular\Foundation\Hooker\Wordpress\PluginHookers\PluginHooker;
+use WPModular\Foundation\Hooker\Wordpress\PluginHooks\PluginHook;
 
-class DeactivationHooker extends PluginHooker
+class DeactivationHook extends PluginHook
 {
     /**
      * Abstract method implemented from PluginHooker class.

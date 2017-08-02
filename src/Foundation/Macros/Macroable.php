@@ -1,10 +1,10 @@
 <?php
 
-namespace WPModular\Foundation\Proxies\Traits;
+namespace WPModular\Foundation\Macros;
 
 use WPModular\Foundation\Exceptions\BadMethodCallException;
 
-trait Proxable
+trait Macroable
 {
     protected $mixins = array();
 

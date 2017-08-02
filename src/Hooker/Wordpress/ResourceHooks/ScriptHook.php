@@ -4,11 +4,11 @@
  *
  * @author Skazza
  */
-namespace WPModular\Hooker\Wordpress\ResourceHookers;
+namespace WPModular\Hooker\Wordpress\ResourceHooks;
 
-use WPModular\Foundation\Hooker\ResourceHookers\ResourceHooker;
+use WPModular\Foundation\Hooker\ResourceHooks\ResourceHook;
 
-class ScriptHooker extends ResourceHooker
+class ScriptHook extends ResourceHook
 {
     /**
      * Abstract method implemented from ResourceHooker class.

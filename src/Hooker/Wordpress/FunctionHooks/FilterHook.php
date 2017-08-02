@@ -4,11 +4,11 @@
  *
  * @author Skazza
  */
-namespace WPModular\Hooker\Wordpress\FunctionHookers;
+namespace WPModular\Hooker\Wordpress\FunctionHooks;
 
-use WPModular\Foundation\Hooker\Wordpress\FunctionHookers\FunctionHooker;
+use WPModular\Foundation\Hooker\Wordpress\FunctionHooks\FunctionHook;
 
-class FilterHooker extends FunctionHooker
+class FilterHook extends FunctionHook
 {
     /**
      * Abstract method implemented from FunctionHooker class.

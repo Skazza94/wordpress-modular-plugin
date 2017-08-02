@@ -5,11 +5,11 @@
  *
  * @author Skazza
  */
-namespace WPModular\Foundation\Hooker\Wordpress\PluginHookers;
+namespace WPModular\Foundation\Hooker\Wordpress\PluginHooks;
 
-use WPModular\Foundation\Hooker\Hooker;
+use WPModular\Foundation\Hooker\Hook;
 
-abstract class PluginHooker extends Hooker
+abstract class PluginHook extends Hook
 {
     /**
      * @var string Main file of the plugin, used to register/unregister actions.

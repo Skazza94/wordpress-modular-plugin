@@ -5,11 +5,11 @@
  *
  * @author Skazza
  */
-namespace WPModular\Foundation\Hooker\ResourceHookers;
+namespace WPModular\Foundation\Hooker\ResourceHooks;
 
-use WPModular\Foundation\Hooker\Hooker;
+use WPModular\Foundation\Hooker\Hook;
 
-abstract class ResourceHooker extends Hooker
+abstract class ResourceHook extends Hook
 {
     /**
      * @var string Version of the plugin.

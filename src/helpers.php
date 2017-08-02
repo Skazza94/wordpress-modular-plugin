@@ -6,7 +6,7 @@ if(!function_exists('app')) {
         global $appCtx;
 
         try {
-            return (!is_null($key)) ? $appCtx->getService($key) : $appCtx;
+            return (!is_null($key)) ? $appCtx->get($key) : $appCtx;
         } catch (\Symfony\Component\DependencyInjection\Exception\ServiceNotFoundException $e) {
             return null;
         }
@@ -33,6 +33,16 @@ if(!function_exists('config')) {
     }
 }
 
+if(!function_exists('cron')) {
+    /**
+     * @return \WPModular\Cron\CronService
+     */
+    function cron()
+    {
+        return app('cron');
+    }
+}
+
 if(!function_exists('env')) {
     /**
      * @return string
@@ -50,6 +60,16 @@ if(!function_exists('storage')) {
     function storage($name)
     {
         return app('filesystem')->storage($name);
+    }
+}
+
+if(!function_exists('translate')) {
+    /**
+     * @return string
+     */
+    function translate($tag)
+    {
+        return app('l10n')->translate($tag);
     }
 }
 

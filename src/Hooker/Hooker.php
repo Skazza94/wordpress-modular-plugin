@@ -7,17 +7,21 @@
  */
 namespace WPModular\Hooker;
 
+use League\Flysystem\Filesystem;
 use Symfony\Component\Yaml\Exception\ParseException;
 use Symfony\Component\Yaml\Yaml;
 use WPModular\Hooker\Factories\HookerFactory;
 
 class Hooker
 {
-    private $config = null;
+    private $namespace = null;
+    /** @var Filesystem */
+    private $filesystem = null;
 
-    public function __construct()
+    public function __construct($namespace, $filesystem)
     {
-        $this->config = config('hooker');
+        $this->namespace = $namespace;
+        $this->filesystem = $filesystem;
     }
 
     /**
@@ -25,11 +29,11 @@ class Hooker
      *
      * @author Skazza
      */
-    public function hookPlugin()
+    public function hookModules()
     {
-        /* Get all "modules" subfolders. */
-        $filesystem = storage('plugin');
-        $subfolders = $filesystem->listContents($this->config['modules_path']);
+        $subfolders = array_filter($this->filesystem->listContents(), function($value) {
+            return $value['type'] === 'dir';
+        });
 
         /* Iterates over them */
         foreach($subfolders as $folder) {
@@ -42,6 +46,8 @@ class Hooker
                 $type = (string) $hook['type']; /* Get "type" attribute of the hook */
                 if(is_null($type) || empty($type)) /* Skip if empty */
                     continue;
+
+                $hook['namespace'] = $this->namespace;
 
                 /* Create an Hooker subclass instance starting from the "type" value */
                 /* Each Hooker subclass handles a different type of registration (action, filter, etc) */
@@ -61,25 +67,26 @@ class Hooker
      */
     private function readConfigFile($folder)
     {
-        $filesystem = storage('plugin');
-        $fileName = $folder . DIRECTORY_SEPARATOR . $this->config['config_name'] . '.' . $this->config['config_format']; /* Build the complete path + filename */
+        $filesystem = $this->filesystem;
+        $fileName = $folder . DIRECTORY_SEPARATOR . config('hooker.config_name') . '.' . config('hooker.config_format'); /* Build the complete path + filename */
 
         if(!$filesystem->has($fileName)) /* If it's not there, exit */
             return null;
 
         if(env('USE_CACHE'))
             return cache()->remember(sha1($fileName), env('CACHE_MINUTES'), function () use ($filesystem, $fileName) {
-                try {
-                    return Yaml::parse($filesystem->read($fileName));
-                } catch (ParseException $e) {
-                    return null;
-                }
+                $this->parseYaml($filesystem->read($fileName));
             });
         else
-            try {
-                return Yaml::parse($filesystem->read($fileName));
-            } catch (ParseException $e) {
-                return null;
-            }
+            return $this->parseYaml($filesystem->read($fileName));
+    }
+
+    private function parseYaml($file)
+    {
+        try {
+            return Yaml::parse($file);
+        } catch (ParseException $e) {
+            return null;
+        }
     }
 }

@@ -5,7 +5,7 @@ namespace WPModular\Foundation\Factories;
 use Gnugat\NomoSpaco\File\FileRepository;
 use Gnugat\NomoSpaco\FqcnRepository;
 use Gnugat\NomoSpaco\Token\ParserFactory;
-use WPModular\Foundation\View\Singleton;
+use WPModular\Foundation\Support\Singleton;
 
 abstract class Factory extends Singleton
 {
@@ -39,6 +39,6 @@ abstract class Factory extends Singleton
         $ns = $this->getFQNameForClass($name);
         $fullName = $this->beforeCreate($name, $ns, $args);
 
-        return (class_exists($fullName)) ? new $fullName(...$args) : null;
+        return (class_exists($fullName)) ? app()->create($fullName, $args) : null;
     }
 }

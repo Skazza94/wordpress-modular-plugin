@@ -18,6 +18,6 @@ class HookerFactory extends Factory
 
     protected function processName($name)
     {
-        return ucfirst(strtolower($name)) . 'Hooker';
+        return ucfirst(strtolower($name)) . 'Hook';
     }
 }
