@@ -41,7 +41,8 @@ class ApplicationContext implements ApplicationContextContract
 
     private function register($id, $className, $arguments)
     {
-        $definition = $this->container->register($id, $className);
+        $definition = $this->container->register($id, $className)
+                                      ->setLazy(true);
 
         $arguments = (!is_array($arguments)) ? array($arguments) : $arguments;
         if(!empty($arguments))
