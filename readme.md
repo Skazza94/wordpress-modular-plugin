@@ -77,8 +77,7 @@ Sounds awesome, right? But there's much more to tell you, so here's the Features
   
 ## What's missing
 - [ ] All Flysystem drivers implemented into ``FilesystemManager``
+- [ ] Use Cache Flag for more Services if possible
+- [ ] WordPress Service should do something :(
 - [ ] Better code comments
 - [ ] Other?
-
-## WPM Wiki
-Coming soon!
