@@ -7,7 +7,9 @@ use WPModular\Foundation\Services\Service;
 class WordpressService extends Service
 {
     public function bootstrap()
-    {}
+    {
+        parent::bootstrap();
+    }
 
     public function getPluginName()
     {

@@ -2,9 +2,7 @@
 
 namespace WPModular\Modules;
 
-use WPModular\Foundation\Support\Singleton;
-
-class ModuleRegisterer extends Singleton
+class ModuleRegisterer
 {
     public function registerModule($name, $properties = array())
     {

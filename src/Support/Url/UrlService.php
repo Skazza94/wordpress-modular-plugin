@@ -14,6 +14,8 @@ class UrlService extends Service
 {
     public function bootstrap()
     {
+        parent::bootstrap();
+
         $this->addMixin(
             $this->app->create(
                 WpUrlAdapter::class

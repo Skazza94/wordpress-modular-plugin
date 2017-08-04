@@ -60,7 +60,7 @@ class CacheManager implements CacheContract
 
     public function remember($key, $ttl, callable $callback)
     {
-        if (!$this->has($key))
+        if(!$this->has($key))
             $this->set($key, $callback(), $ttl * 60);
 
         return $this->get($key);

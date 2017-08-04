@@ -7,6 +7,7 @@
  */
 namespace WPModular\Foundation\Hooker\Wordpress\FunctionHooks;
 
+use WPModular\Cron\CronManager;
 use WPModular\Foundation\Hooker\Hook;
 
 abstract class FunctionHook extends Hook
@@ -34,7 +35,7 @@ abstract class FunctionHook extends Hook
             $tag = (string) $hook['tag'];
 
             if((array_key_exists('cron', $hook) && !empty($hook['cron'])) && strpos(static::class, 'ActionHook') !== false) /* This is a cron task, register it into CronManager */
-                cron()->registerCronEvent($tag, (string) $hook['cron']);
+                app()->singleton('cron', CronManager::class)->registerCronEvent($tag, (string) $hook['cron']);
 
             $priority = (array_key_exists('priority', $hook) && !empty($hook['priority'])) ? (int) $hook['priority'] : 10; /* Read the priority, if it's defined. If not set default value to 10. */
             $args = (array_key_exists('args', $hook) && !empty($hook['args'])) ? (int) $hook['args'] : 1; /* Read the arguments to pass to the function, if it's defined. If not set default value to 1. */

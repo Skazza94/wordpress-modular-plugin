@@ -8,6 +8,14 @@ class CronManager implements CronContract
 {
     private $cronEvents = array();
 
+    public function __construct()
+    {
+        $file = app()->getRootPath() . DIRECTORY_SEPARATOR . env('PLUGIN_SLUG') . '.php';
+
+        register_activation_hook($file, array($this, 'registerEvents'));
+        register_deactivation_hook($file, array($this, 'unregisterEvents'));
+    }
+
     public function registerEvents()
     {
         foreach($this->cronEvents as $eventName => $eventInterval) {

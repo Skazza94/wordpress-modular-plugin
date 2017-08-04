@@ -58,7 +58,6 @@ Sounds awesome, right? But there's much more to tell you, so here's the Features
         2. **Config**, based on Zend's [Config](https://github.com/zendframework/zend-config).
             1. Simplified method to access values using a "dotted notation":
                 - For example, ``my_config_file.first_value.second_value``.
-        3. **Cron**, which manages WP Cron Tasks in an OOP-way and compatible with WPM.
         3. **Environment** (to handle plugin constants), based on [DotEnv](https://github.com/vlucas/phpdotenv).
         4. **Filesystem**, a good FS abstraction using [Flysystem](https://github.com/thephpleague/flysystem).
             1. Easily declare a new Filesystem using a configuration file.

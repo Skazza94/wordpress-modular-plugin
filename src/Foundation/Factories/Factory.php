@@ -14,7 +14,15 @@ abstract class Factory extends Singleton
 
     protected function __construct()
     {
-        $this->fqnsService = new FqcnRepository(new FileRepository, new ParserFactory);
+        $fileRepository = app()->create(FileRepository::class);
+        $parserFactory = app()->create(ParserFactory::class);
+
+        $this->fqnsService = app()->singleton(
+            'nspaco-fqcn',
+            FqcnRepository::class,
+            array($fileRepository, $parserFactory)
+        );
+
         $this->setSearchPath();
     }
 

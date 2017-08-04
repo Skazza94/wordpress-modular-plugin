@@ -9,4 +9,5 @@ interface ApplicationContextContract
     public function create($className, $arguments = array());
     public function get($id);
     public function getRootPath();
+    public function isLoaded();
 }

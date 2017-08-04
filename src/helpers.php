@@ -33,16 +33,6 @@ if(!function_exists('config')) {
     }
 }
 
-if(!function_exists('cron')) {
-    /**
-     * @return \WPModular\Cron\CronService
-     */
-    function cron()
-    {
-        return app('cron');
-    }
-}
-
 if(!function_exists('env')) {
     /**
      * @return string

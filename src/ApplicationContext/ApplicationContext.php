@@ -10,6 +10,7 @@ class ApplicationContext implements ApplicationContextContract
 {
     private $container = null;
     private $ROOT = null;
+    private $LOADED = false;
 
     public function __construct($root)
     {
@@ -19,6 +20,10 @@ class ApplicationContext implements ApplicationContextContract
 
     public function bootstrap()
     {
+        /* If the plugin has been already bootstrapped, exit */
+        if($this->LOADED)
+            return;
+
         /* Loads the helpers. */
         include_once(dirname(dirname(__FILE__)) . DIRECTORY_SEPARATOR . 'helpers.php');
 
@@ -29,14 +34,17 @@ class ApplicationContext implements ApplicationContextContract
 
         /* Registers and Handlers ModuleProviders */
         $this->handleModuleProviders();
+
+        $this->LOADED = true;
     }
 
     private function handleModuleProviders()
     {
         $providers = $this->get('config')->get('hooker.providers');
+
         if(!empty($providers) && is_array($providers))
             foreach($providers as $provider)
-                $this->singleton(array_pop(explode('\\', $provider)), $provider, array($this))->boot();
+                $this->create($provider, array($this))->boot();
     }
 
     private function register($id, $className, $arguments)
@@ -77,5 +85,10 @@ class ApplicationContext implements ApplicationContextContract
     public function getRootPath()
     {
         return $this->ROOT;
+    }
+
+    public function isLoaded()
+    {
+        return $this->LOADED;
     }
 }

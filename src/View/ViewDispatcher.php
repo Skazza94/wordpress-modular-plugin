@@ -21,21 +21,33 @@ class ViewDispatcher
     public function render($viewName, $params = array(), $print = true)
     {
         $tokens = explode('/', $viewName);
-        $viewName = array_pop($tokens);
-        $ext = pathinfo($viewName, PATHINFO_EXTENSION);
+        $fileName = array_pop($tokens);
+        $ext = pathinfo($fileName, PATHINFO_EXTENSION);
 
         if(!in_array($ext, $this->supported))
             return null;
 
-        return $this->renderByType($ext, $viewName, implode('/', $tokens), $params, $print);
+        $path = implode('/', $tokens);
+
+        if(env('USE_CACHE'))
+            $out = cache()->remember(sha1($viewName), config('wp_modular.cache.expires'), function() use ($ext, $fileName, $path, $params) {
+                return $this->renderByType($ext, $fileName, $path, $params);
+            });
+        else
+            $out = $this->renderByType($ext, $fileName, $path, $params);
+
+        if($print)
+            echo $out;
+
+        return $out;
     }
 
-    private function renderByType($type, $viewName, $prefix, $params, $print)
+    private function renderByType($type, $viewName, $prefix, $params)
     {
         if(!array_key_exists($type, $this->adapters))
             $this->adapters[$type] = $this->create($type);
 
-        return (!is_null($this->adapters[$type])) ? $this->adapters[$type]->render($viewName, $prefix, $params, $print) : null;
+        return (!is_null($this->adapters[$type])) ? $this->adapters[$type]->render($viewName, $prefix, $params) : null;
     }
 
     private function create($type)
