@@ -5,6 +5,7 @@ namespace WPModular\ApplicationContext;
 use Symfony\Component\DependencyInjection\ContainerBuilder;
 use WPModular\Contracts\ApplicationContext\ApplicationContextContract;
 use WPModular\Foundation\Exceptions\NotSingletonException;
+use WPModular\Foundation\Modules\ModuleProvider;
 
 class ApplicationContext implements ApplicationContextContract
 {
@@ -43,8 +44,12 @@ class ApplicationContext implements ApplicationContextContract
         $providers = $this->get('config')->get('hooker.providers');
 
         if(!empty($providers) && is_array($providers))
-            foreach($providers as $provider)
-                $this->create($provider, array($this))->boot();
+            foreach($providers as $provider) {
+                $provider = $this->create($provider, array($this));
+
+                if($provider instanceof ModuleProvider && method_exists($provider, 'boot'))
+                    $provider->boot();
+            }
     }
 
     private function register($id, $className, $arguments)
