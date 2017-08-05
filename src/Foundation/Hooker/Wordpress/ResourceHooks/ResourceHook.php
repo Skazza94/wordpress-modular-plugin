@@ -33,16 +33,17 @@ abstract class ResourceHook extends Hook
      *
      * @param array $data YAML data of the hook.
      * @param string|array $handler Not used here.
+     * @return boolean If everything as been hooked or not.
      * @author Skazza
      */
     protected function hookSpecific($data, $handler)
     {
         if(!array_key_exists('id', $data) || empty($data['id'])) /* If no id is defined, exit */
-            return;
+            return false;
         $id = (string) $data['id'];
 
         if(!array_key_exists('url', $data) || empty($data['url'])) /* If there's no url for the resource, exit */
-            return;
+            return false;
         $url = PLUGIN_PATH . ((string) $data['url']); /* Build complete url for the resource */
 
         /* If there are dependecies, get the array, if not default empty array. */
@@ -56,6 +57,8 @@ abstract class ResourceHook extends Hook
 
             $this->callWPRegisterer($id, $url, $dependencies, $page, $data); /* Call the real WordPress function to register this action */
         }
+
+        return true;
     }
 
     /**

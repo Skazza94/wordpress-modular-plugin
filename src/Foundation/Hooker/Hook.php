@@ -37,6 +37,7 @@ abstract class Hook implements HookerContract
      *
      * @param array $data YAML data of the hook.
      * @param string|array $handler Already parsed handler function.
+     * @return boolean If everything as been hooked or not.
      * @author Skazza
      */
     protected abstract function hookSpecific($data, $handler);

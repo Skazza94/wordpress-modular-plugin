@@ -32,11 +32,13 @@ abstract class PluginHook extends Hook
      *
      * @param Object $data Not used here.
      * @param string|array $handler Already parsed handler function.
+     * @return boolean If everything as been hooked or not.
      * @author Skazza
      */
     protected function hookSpecific($data, $handler)
     {
         $this->callWPRegisterer($handler); /* Call the real WordPress function to register this action */
+        return true;
     }
 
     /**

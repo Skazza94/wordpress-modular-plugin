@@ -9,6 +9,7 @@ namespace WPModular\Foundation\Hooker\Wordpress\FunctionHooks;
 
 use WPModular\Cron\CronManager;
 use WPModular\Foundation\Hooker\Hook;
+use WPModular\Hooker\Wordpress\FunctionHooks\ActionHook;
 
 abstract class FunctionHook extends Hook
 {
@@ -19,29 +20,29 @@ abstract class FunctionHook extends Hook
      *
      * @param array $data YAML data of the hook.
      * @param string|array $handler Already parsed handler function.
+     * @return boolean If everything as been hooked or not.
      * @author Skazza
      */
     protected function hookSpecific($data, $handler)
     {
         if(is_null($handler))
-            return;
+            return false;
 
         if(!array_key_exists('tags', $data) || empty($data['tags'])) /* If there are no WP tags, this can't be hooked */
-            return;
+            return false;
 
         foreach($data['tags'] as $hook) { /* Iterate over WP tags */
             if(!array_key_exists('tag', $hook) || empty($hook['tag'])) /* If empty, skip */
                 continue;
             $tag = (string) $hook['tag'];
 
-            if((array_key_exists('cron', $hook) && !empty($hook['cron'])) && strpos(static::class, 'ActionHook') !== false) /* This is a cron task, register it into CronManager */
-                app()->singleton('cron', CronManager::class)->registerCronEvent($tag, (string) $hook['cron']);
-
             $priority = (array_key_exists('priority', $hook) && !empty($hook['priority'])) ? (int) $hook['priority'] : 10; /* Read the priority, if it's defined. If not set default value to 10. */
             $args = (array_key_exists('args', $hook) && !empty($hook['args'])) ? (int) $hook['args'] : 1; /* Read the arguments to pass to the function, if it's defined. If not set default value to 1. */
 
             $this->callWPRegisterer($tag, $handler, $priority, $args); /* Call the real WordPress function to register this action */
         }
+
+        return true;
     }
 
     /**
