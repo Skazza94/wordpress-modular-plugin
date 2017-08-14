@@ -68,7 +68,7 @@ class CronManager implements CronContract
             return;
 
         $this->cronIntervals[$name] = array(
-            'interval' => ((int) $minutes) * 60,
+            'interval' => abs($minutes) * 60,
             'display' => "{$minutes} mins"
         );
 

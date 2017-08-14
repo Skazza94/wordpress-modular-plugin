@@ -1,6 +1,10 @@
 <?php
 
 if(!function_exists('app')) {
+    /**
+     * @param string $key
+     * @return mixed
+     */
     function app($key = null)
     {
         global $appCtx;
@@ -30,6 +34,13 @@ if(!function_exists('config')) {
     function config($configString)
     {
         return app('config')->get($configString);
+    }
+}
+
+if(!function_exists('add_cron_interval')) {
+    function add_cron_interval($name, $minutes)
+    {
+        app('cron')->addCronInterval($name, $minutes);
     }
 }
 
