@@ -67,8 +67,7 @@ Sounds awesome, right? But there's much more to tell you, so here's the Features
         6. **Url**, build/parse and get URLs for locations.
         7. **View**, with multiple choices for views rendering:
             1. A robust template engine using [Twig 1.x](http://twig.sensiolabs.org/doc/1.x/) and [Timber](https://github.com/timber/timber) (for WP support).
-            2. Plain HTML and PHP files support (with no template engines).
-        8. **WordPress**, a simple wrapper for some WordPress functions.      
+            2. Plain HTML and PHP files support (with no template engines).   
   6. Helper functions to access Services functions in an easy way, for example:
         - ``config($key)`` to get a configuration value from a configuration file.
         - ``storage($name)`` to get a filesystem.
