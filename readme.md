@@ -72,10 +72,12 @@ Sounds awesome, right? But there's much more to tell you, so here's the Features
         - ``config($key)`` to get a configuration value from a configuration file.
         - ``storage($name)`` to get a filesystem.
         - ``app($serviceName)`` to get a Service from the Application Context.
+        
+## Wiki
+[Wiki](https://github.com/Skazzino/wpm-boilerplate-plugin/wiki) can be found in the boilerplate project, and will help you to know how to build Modules and use Services.
   
 ## What's missing
 - [ ] All Flysystem drivers implemented into ``FilesystemManager``
-- [ ] Use Cache Flag for more Services if possible
-- [ ] WordPress Service should do something :(
+- [x] Use Cache Flag for more Services if possible
 - [ ] Better code comments
 - [ ] Other?
