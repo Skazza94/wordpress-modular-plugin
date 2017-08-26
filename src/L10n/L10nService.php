@@ -18,7 +18,7 @@ class L10nService extends Service
         $this->addMixin(
             $this->app->create(
                 TranslationManager::class,
-                env('PLUGIN_NAME')
+                config('wp_modular.plugin_name')
             )
         );
     }
@@ -29,9 +29,9 @@ class L10nService extends Service
             return;
 
         load_plugin_textdomain(
-            env('PLUGIN_NAME'),
+            config('wp_modular.plugin_name'),
             false,
-            wp_service()->getPluginName() . DIRECTORY_SEPARATOR . config('wp_modular.l10n.path')
+            config('wp_modular.plugin_slug') . DIRECTORY_SEPARATOR . config('wp_modular.l10n.path')
         );
     }
 }

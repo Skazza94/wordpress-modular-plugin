@@ -23,7 +23,7 @@ abstract class ResourceHook extends Hook
      */
     public function __construct()
     {
-        $this->VERSION = env('VERSION');
+        $this->VERSION = config('wp_modular.version');
     }
 
     /**

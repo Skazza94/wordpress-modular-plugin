@@ -14,7 +14,7 @@ class CronManager implements CronContract
         if(app()->isLoaded())
             return;
 
-        $file = app()->getRootPath() . DIRECTORY_SEPARATOR . env('PLUGIN_SLUG') . '.php';
+        $file = app()->getRootPath() . DIRECTORY_SEPARATOR . config('wp_modular.plugin_slug') . '.php';
 
         register_activation_hook($file, array($this, 'registerEvents'));
         register_deactivation_hook($file, array($this, 'unregisterEvents'));

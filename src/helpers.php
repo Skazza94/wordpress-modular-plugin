@@ -93,14 +93,3 @@ if(!function_exists('render')) {
         return app('view')->render($viewName, $params, $print);
     }
 }
-
-if(!function_exists('wp_service')) {
-    /**
-     * @return \WPModular\Wordpress\WordpressService
-     */
-    function wp_service()
-    {
-        return app('wp');
-    }
-}
-

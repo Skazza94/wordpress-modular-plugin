@@ -23,7 +23,7 @@ abstract class PluginHook extends Hook
      */
     public function __construct()
     {
-        $this->FILE = app()->getRootPath() . DIRECTORY_SEPARATOR . env('PLUGIN_SLUG') . '.php';
+        $this->FILE = app()->getRootPath() . DIRECTORY_SEPARATOR . config('wp_modular.plugin_slug') . '.php';
     }
 
     /**
