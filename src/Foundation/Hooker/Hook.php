@@ -24,9 +24,8 @@ abstract class Hook implements HookerContract
      */
     public function hookModule($data)
     {
-        if(!array_key_exists('handler', $data))
-            return;
-
+        $data['handler'] = (!array_key_exists('handler', $data)) ? null : $data['handler']; /* For ResourceHook */
+        
         $handler = $this->parseHandler($data['handler'], $data['namespace']);
 
         $this->hookSpecific($data, $handler);
