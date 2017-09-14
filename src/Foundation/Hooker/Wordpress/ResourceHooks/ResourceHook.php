@@ -5,7 +5,7 @@
  *
  * @author Skazza
  */
-namespace WPModular\Foundation\Hooker\ResourceHooks;
+namespace WPModular\Foundation\Hooker\Wordpress\ResourceHooks;
 
 use WPModular\Foundation\Hooker\Hook;
 

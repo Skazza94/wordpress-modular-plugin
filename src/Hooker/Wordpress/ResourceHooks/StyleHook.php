@@ -6,7 +6,7 @@
  */
 namespace WPModular\Hooker\Wordpress\ResourceHooks;
 
-use WPModular\Foundation\Hooker\ResourceHooks\ResourceHook;
+use WPModular\Foundation\Hooker\Wordpress\ResourceHooks\ResourceHook;
 
 class StyleHook extends ResourceHook
 {
