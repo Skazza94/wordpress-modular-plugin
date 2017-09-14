@@ -11,9 +11,6 @@ class CronManager implements CronContract
 
     public function __construct()
     {
-        if(app()->isLoaded())
-            return;
-
         $file = app()->getRootPath() . DIRECTORY_SEPARATOR . config('wp_modular.plugin_slug') . '.php';
 
         register_activation_hook($file, array($this, 'registerEvents'));
@@ -24,18 +21,12 @@ class CronManager implements CronContract
 
     public function registerIntervals($schedules)
     {
-        if(app()->isLoaded())
-            return;
-
         $schedules += $this->cronIntervals;
         return $schedules;
     }
 
     public function registerEvents()
     {
-        if(app()->isLoaded())
-            return;
-
         foreach($this->cronEvents as $eventName => $eventInterval) {
             list($recurrence, $timestamp) = $this->makeTimestamp($eventInterval);
             wp_schedule_event($timestamp, $recurrence, $eventName);
@@ -44,26 +35,17 @@ class CronManager implements CronContract
 
     public function unregisterEvents()
     {
-        if(app()->isLoaded())
-            return;
-
         foreach($this->cronEvents as $eventName => $eventInterval)
             wp_clear_scheduled_hook($eventName);
     }
 
     public function registerCronEvent($tag, $interval)
     {
-        if(app()->isLoaded())
-            return;
-
         $this->cronEvents += array($tag => $interval);
     }
 
     public function addCronInterval($name, $minutes)
     {
-        if(app()->isLoaded())
-            return;
-
         if(in_array($name, array('hourly', 'twicedaily', 'daily')))
             return;
 

@@ -10,6 +10,7 @@ abstract class Service implements ServiceContract
 {
     use Macroable;
 
+    static public $BOOTLOAD = false;
     protected $app = null;
 
     public function __construct(ApplicationContextContract $app)

@@ -9,6 +9,8 @@ use WPModular\Foundation\Services\Service;
  */
 class L10nService extends Service
 {
+    static public $BOOTLOAD = true;
+
     public function bootstrap()
     {
         add_action('plugins_loaded', array($this, 'loadPluginLanguageDomain'));
