@@ -91,9 +91,4 @@ class ApplicationContext implements ApplicationContextContract
     {
         return $this->ROOT;
     }
-
-    public function isLoaded()
-    {
-        return $this->LOADED;
-    }
 }

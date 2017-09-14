@@ -11,8 +11,6 @@ class L10nService extends Service
 {
     public function bootstrap()
     {
-        parent::bootstrap();
-
         add_action('plugins_loaded', array($this, 'loadPluginLanguageDomain'));
 
         $this->addMixin(
@@ -25,9 +23,6 @@ class L10nService extends Service
 
     public function loadPluginLanguageDomain()
     {
-        if($this->app->isLoaded())
-            return;
-
         load_plugin_textdomain(
             config('wp_modular.plugin_name'),
             false,

@@ -13,8 +13,6 @@ class ConfigService extends Service
 {
     public function bootstrap()
     {
-        parent::bootstrap();
-
         $this->addMixin(
             $this->app->create(
                 ConfigManager::class,

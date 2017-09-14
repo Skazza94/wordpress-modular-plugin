@@ -17,10 +17,4 @@ abstract class Service implements ServiceContract
         $this->app = $app;
         $this->bootstrap();
     }
-
-    public function bootstrap()
-    {
-        if($this->app->isLoaded())
-            return;
-    }
 }

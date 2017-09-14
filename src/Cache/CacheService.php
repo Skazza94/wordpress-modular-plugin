@@ -18,8 +18,6 @@ class CacheService extends Service
 {
     public function bootstrap()
     {
-        parent::bootstrap();
-
         $this->addMixin(
             $this->app->create(
                 CacheManager::class,
