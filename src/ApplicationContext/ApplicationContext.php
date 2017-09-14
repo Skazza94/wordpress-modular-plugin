@@ -30,8 +30,12 @@ class ApplicationContext implements ApplicationContextContract
 
         /* Brutally reads the services before loading the proper config manager */
         $services = require_once($this->ROOT . DIRECTORY_SEPARATOR . 'config' . DIRECTORY_SEPARATOR . 'services.php');
-        foreach($services as $alias => $serviceName)
-            $this->register($alias, $serviceName, array($this), $serviceName::BOOTLOAD);
+        foreach($services as $alias => $serviceName) {
+            $this->register($alias, $serviceName, array($this));
+
+            if($serviceName::$BOOTLOAD)
+                $this->get($alias); /* We have to call the bootstrap method. To do this, we get the instance for the Container so constructor will be called. */
+        }
 
         /* Registers and Handlers ModuleProviders */
         $this->handleModuleProviders();
@@ -52,10 +56,10 @@ class ApplicationContext implements ApplicationContextContract
             }
     }
 
-    private function register($id, $className, $arguments, $bootLoad = false)
+    private function register($id, $className, $arguments)
     {
         $definition = $this->container->register($id, $className)
-                                      ->setLazy(!$bootLoad);
+                                      ->setLazy(true);
 
         $arguments = (!is_array($arguments)) ? array($arguments) : $arguments;
         if(!empty($arguments))
