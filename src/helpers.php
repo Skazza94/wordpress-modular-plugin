@@ -64,11 +64,11 @@ if(!function_exists('storage')) {
     }
 }
 
-if(!function_exists('translate')) {
+if(!function_exists('localize')) {
     /**
      * @return string
      */
-    function translate($tag)
+    function localize($tag)
     {
         return app('l10n')->translate($tag);
     }
