@@ -64,7 +64,10 @@ class CronManager implements CronContract
         $recurrence = trim($recurrence);
         $hour = (!is_null($hour)) ? trim($hour) : $hour;
 
-        $timestamp = (!is_null($hour)) ? (new \DateTime("{$hour}:00", new \DateTimeZone(get_option('timezone_string'))))->getTimestamp() : time();
+        $currentTime = time(); /* We save it so we have no problems with checks */
+        $timestamp = (!is_null($hour)) ? (new \DateTime("{$hour}:00", new \DateTimeZone(get_option('timezone_string'))))->getTimestamp() : $currentTime;
+        if($timestamp < $currentTime)
+            $timestamp += 24 * 60 * 60; /* We have to add a day */
 
         return array($recurrence, $timestamp);
     }
