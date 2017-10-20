@@ -44,7 +44,10 @@ abstract class ResourceHook extends Hook
 
         if(!array_key_exists('url', $data) || empty($data['url'])) /* If there's no url for the resource, exit */
             return false;
-        $url = plugins_url(config('wp_modular.plugin_slug') . DIRECTORY_SEPARATOR . ((string) $data['url'])); /* Build complete url for the resource */
+
+        $remote = (array_key_exists('remote', $data)) ? (bool) $data['remote'] : false;
+
+        $url = (!$remote) ? plugins_url(config('wp_modular.plugin_slug') . DIRECTORY_SEPARATOR . ((string) $data['url'])) : $data['url']; /* Build complete url for the resource */
 
         /* If there are dependecies, get the array, if not default empty array. */
         $dependencies = (array_key_exists('dependencies', $data)) ? array_filter(array_unique($data['dependencies'])) : array();
