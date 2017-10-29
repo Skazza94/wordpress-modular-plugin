@@ -40,7 +40,7 @@ if(!function_exists('config')) {
 if(!function_exists('add_cron_interval')) {
     function add_cron_interval($name, $minutes)
     {
-        app('cron')->addCronInterval($name, $minutes);
+        app()->singleton('cron', \WPModular\Cron\CronManager::class)->addCronInterval($name, $minutes);
     }
 }
 
