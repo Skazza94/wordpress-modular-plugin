@@ -31,12 +31,11 @@ class Hooker
      */
     public function hookModules()
     {
-        $subfolders = array_filter($this->filesystem->listContents(), function($value) {
-            return $value['type'] === 'dir';
-        });
+        /* Creates a flat array with all modules subfolders + single modules subfolders */
+        $flatten = $this->flatFoldersArray($this->getSubFolders());
 
         /* Iterates over them */
-        foreach($subfolders as $folder) {
+        foreach($flatten as $folder) {
             $hooks = $this->readConfigFile($folder['path']); /* Read the config file into the "modules" subfolder */
 
             if(is_null($hooks))
@@ -59,6 +58,37 @@ class Hooker
     }
 
     /**
+     * Retrieves all the subfolders of a given path.
+     *
+     * @param string $path Starting path for subfolders listing.
+     * @return array An array containing all the path subfolders.
+     * @author Skazza
+     */
+    private function getSubFolders($path = '')
+    {
+        return array_filter($this->filesystem->listContents($path), function($value) {
+            return $value['type'] === 'dir';
+        });
+    }
+
+    /**
+     * Recursively creates a flat array with all the subfolders of a root folder.
+     *
+     * @param array $array Current array which contains subfolders.
+     * @return array The flatten array with all subfolders.
+     * @author Skazza
+     */
+    private function flatFoldersArray($array)
+    {
+        $flat = [];
+
+        foreach($array as $value)
+            $flat = array_merge($flat, [$value], $this->flatFoldersArray($this->getSubFolders($value['path'])));
+
+        return $flat;
+    }
+
+    /**
      * Loads the YAML file from a "modules" subfolder.
      *
      * @param string $folder "modules" subfolder where search the configuration YAML file.
@@ -75,7 +105,7 @@ class Hooker
 
         if(env('USE_CACHE'))
             return cache()->remember(sha1($fileName), config('wp_modular.cache.expires'), function () use ($filesystem, $fileName) {
-                return $this->parseYaml($filesystem->read($fileName));
+                $this->parseYaml($filesystem->read($fileName));
             });
         else
             return $this->parseYaml($filesystem->read($fileName));
