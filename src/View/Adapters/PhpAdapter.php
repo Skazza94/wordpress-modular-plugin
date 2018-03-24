@@ -12,7 +12,7 @@ class PhpAdapter extends ViewAdapter
             extract($params);
 
         ob_start();
-        include($this->buildViewPath($prefix) . "{$viewName}.php");
+        include($this->buildViewPath($prefix) . $viewName);
         $out = ob_get_contents();
         ob_end_clean();
 
