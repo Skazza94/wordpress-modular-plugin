@@ -5,7 +5,7 @@ namespace WPModular\View;
 use WPModular\Foundation\Services\Service;
 
 /**
- * @method string render($viewName, array $params, boolean $print)
+ * @method string render($viewName, array $params, boolean $print, boolean $overrideCache)
  */
 class ViewService extends Service
 {
