@@ -88,8 +88,8 @@ if(!function_exists('render')) {
     /**
      * @return string
      */
-    function render($viewName, $params = array(), $print = true)
+    function render($viewName, $params = array(), $print = true, $overrideCache = false)
     {
-        return app('view')->render($viewName, $params, $print);
+        return app('view')->render($viewName, $params, $print, $overrideCache);
     }
 }
