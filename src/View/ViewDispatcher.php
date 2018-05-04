@@ -18,7 +18,7 @@ class ViewDispatcher
         $this->VIEW_PATH = $rootPath . $configs['path'] . DIRECTORY_SEPARATOR;
     }
 
-    public function render($viewName, $params = array(), $print = true)
+    public function render($viewName, $params = array(), $print = true, $overrideCache = false)
     {
         $tokens = explode('/', $viewName);
         $fileName = array_pop($tokens);
@@ -29,7 +29,7 @@ class ViewDispatcher
 
         $path = implode('/', $tokens);
 
-        if(env('USE_CACHE'))
+        if(env('USE_CACHE') && !$overrideCache)
             $out = cache()->remember(sha1($viewName), config('wp_modular.cache.expires'), function() use ($ext, $fileName, $path, $params) {
                 return $this->renderByType($ext, $fileName, $path, $params);
             });
