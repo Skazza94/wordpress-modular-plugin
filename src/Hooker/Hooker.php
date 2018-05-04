@@ -105,7 +105,7 @@ class Hooker
 
         if(env('USE_CACHE'))
             return cache()->remember(sha1($fileName), config('wp_modular.cache.expires'), function () use ($filesystem, $fileName) {
-                $this->parseYaml($filesystem->read($fileName));
+                return $this->parseYaml($filesystem->read($fileName));
             });
         else
             return $this->parseYaml($filesystem->read($fileName));
