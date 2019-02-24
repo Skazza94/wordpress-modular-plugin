@@ -20,8 +20,8 @@ class ModuleRegisterer
     private function registerInAppContext($id, $name, $properties)
     {
         $app = app();
-        $properties += array($app);
+        $properties += array('app' => $app);
 
-        $app->singleton($id, $name, $properties);
+        $app->singleton($name, $id, $properties);
     }
 }

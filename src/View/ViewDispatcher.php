@@ -52,6 +52,6 @@ class ViewDispatcher
 
     private function create($type)
     {
-        return ViewAdapterFactory::getInstance()->create($type, $this->VIEW_PATH);
+        return app()->singleton(ViewAdapterFactory::class)->create($type, array('viewPath' => $this->VIEW_PATH));
     }
 }

@@ -29,7 +29,7 @@ abstract class ModuleProvider
 
         $this->app->create(
             Hooker::class,
-            array($namespace, $folder)
+            array('namespace' => $namespace, 'filesystem' => $folder)
         )->hookModules();
     }
 

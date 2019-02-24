@@ -16,7 +16,7 @@ class EnvironmentService extends Service
         $this->addMixin(
             $this->app->create(
                 DotAdapter::class,
-                $this->app->getRootPath()
+                array('path' => $this->app->getRootPath())
             )
         );
     }

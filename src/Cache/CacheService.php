@@ -21,7 +21,7 @@ class CacheService extends Service
         $this->addMixin(
             $this->app->create(
                 CacheManager::class,
-                $this->app->getRootPath()
+                array('rootPath' => $this->app->getRootPath())
             )
         );
     }

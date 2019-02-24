@@ -50,7 +50,7 @@ class Hooker
 
                 /* Create an Hooker subclass instance starting from the "type" value */
                 /* Each Hooker subclass handles a different type of registration (action, filter, etc) */
-                $hooker =  HookerFactory::getInstance()->create($type);
+                $hooker = app()->singleton(HookerFactory::class)->create($type);
                 if(!is_null($hooker))
                     $hooker->hookModule($hook);
             }

@@ -57,7 +57,7 @@ abstract class Hook implements HookerContract
             return null;
 
         if(array_key_exists('class', $handler) && array_key_exists('method', $handler)) { /* This is a ("ControllerName", "method") type */
-            $id = app()->singleton('mod-reg', ModuleRegisterer::class)->registerModule($namespace . '\\' . $handler['class'], (array_key_exists('properties', $handler)) ? $handler['properties'] : array());
+            $id = app()->singleton(ModuleRegisterer::class)->registerModule($namespace . '\\' . $handler['class'], (array_key_exists('properties', $handler)) ? $handler['properties'] : array());
             return array(ModuleDispatcher::class, $id . '~' . $handler['method']);
         }
 

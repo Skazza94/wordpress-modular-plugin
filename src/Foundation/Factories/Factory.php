@@ -7,22 +7,15 @@ use Gnugat\NomoSpaco\FqcnRepository;
 use Gnugat\NomoSpaco\Token\ParserFactory;
 use WPModular\Foundation\Support\Singleton;
 
-abstract class Factory extends Singleton
+abstract class Factory
 {
+    /** @var FqcnRepository */
     protected $fqnsService = null;
     protected $searchPath = null;
 
     protected function __construct()
     {
-        $fileRepository = app()->create(FileRepository::class);
-        $parserFactory = app()->create(ParserFactory::class);
-
-        $this->fqnsService = app()->singleton(
-            'nspaco-fqcn',
-            FqcnRepository::class,
-            array($fileRepository, $parserFactory)
-        );
-
+        $this->fqnsService = app()->singleton(FqcnRepository::class);
         $this->setSearchPath();
     }
 
@@ -42,7 +35,7 @@ abstract class Factory extends Singleton
 
     abstract protected function processName($name);
 
-    public function create($name, ...$args) {
+    public function create($name, $args = array()) {
         $name = $this->processName($name);
         $ns = $this->getFQNameForClass($name);
         $fullName = $this->beforeCreate($name, $ns, $args);

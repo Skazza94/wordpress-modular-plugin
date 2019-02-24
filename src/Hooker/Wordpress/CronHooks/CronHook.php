@@ -30,7 +30,7 @@ class CronHook extends ActionHook
             if(!array_key_exists('interval', $hook) || empty($hook['interval']))
                 continue;
 
-            app()->singleton('cron', CronManager::class)->registerCronEvent((string) $hook['tag'], (string) $hook['interval']);
+            app()->singleton(CronManager::class)->registerCronEvent((string) $hook['tag'], (string) $hook['interval']);
         }
 
         return true;

@@ -18,7 +18,7 @@ class L10nService extends Service
         $this->addMixin(
             $this->app->create(
                 TranslationManager::class,
-                config('wp_modular.plugin_name')
+                array('textDomain' => config('wp_modular.plugin_name'))
             )
         );
     }

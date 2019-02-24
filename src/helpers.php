@@ -40,7 +40,7 @@ if(!function_exists('config')) {
 if(!function_exists('add_cron_interval')) {
     function add_cron_interval($name, $minutes)
     {
-        app()->singleton('cron', \WPModular\Cron\CronManager::class)->addCronInterval($name, $minutes);
+        app()->singleton(\WPModular\Cron\CronManager::class)->addCronInterval($name, $minutes);
     }
 }
 
@@ -56,7 +56,7 @@ if(!function_exists('env')) {
 
 if(!function_exists('storage')) {
     /**
-     * @return \League\Flysystem\Filesystem\Filesystem
+     * @return \League\Flysystem\Filesystem
      */
     function storage($name)
     {
