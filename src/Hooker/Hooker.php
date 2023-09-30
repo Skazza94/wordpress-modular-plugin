@@ -5,6 +5,7 @@
  *
  * @author Skazza
  */
+
 namespace WPModular\Hooker;
 
 use League\Flysystem\Filesystem;
@@ -35,15 +36,15 @@ class Hooker
         $flatten = $this->flatFoldersArray($this->getSubFolders());
 
         /* Iterates over them */
-        foreach($flatten as $folder) {
+        foreach ($flatten as $folder) {
             $hooks = $this->readConfigFile($folder['path']); /* Read the config file into the "modules" subfolder */
 
-            if(is_null($hooks))
+            if (is_null($hooks))
                 continue;
 
-            foreach($hooks as $hook) { /* Process each declared hook. */
-                $type = (string) $hook['type']; /* Get "type" attribute of the hook */
-                if(is_null($type) || empty($type)) /* Skip if empty */
+            foreach ($hooks as $hook) { /* Process each declared hook. */
+                $type = (string)$hook['type']; /* Get "type" attribute of the hook */
+                if (is_null($type) || empty($type)) /* Skip if empty */
                     continue;
 
                 $hook['namespace'] = $this->namespace;
@@ -51,24 +52,10 @@ class Hooker
                 /* Create an Hooker subclass instance starting from the "type" value */
                 /* Each Hooker subclass handles a different type of registration (action, filter, etc) */
                 $hooker = app()->singleton(HookerFactory::class)->create($type);
-                if(!is_null($hooker))
+                if (!is_null($hooker))
                     $hooker->hookModule($hook);
             }
         }
-    }
-
-    /**
-     * Retrieves all the subfolders of a given path.
-     *
-     * @param string $path Starting path for subfolders listing.
-     * @return array An array containing all the path subfolders.
-     * @author Skazza
-     */
-    private function getSubFolders($path = '')
-    {
-        return array_filter($this->filesystem->listContents($path), function($value) {
-            return $value['type'] === 'dir';
-        });
     }
 
     /**
@@ -82,10 +69,23 @@ class Hooker
     {
         $flat = [];
 
-        foreach($array as $value)
+        foreach ($array as $value)
             $flat = array_merge($flat, [$value], $this->flatFoldersArray($this->getSubFolders($value['path'])));
 
         return $flat;
+    }
+
+    /**
+     * Retrieves all the subfolders of a given path.
+     *
+     * @param string $path Starting path for subfolders listing.
+     * @return array An array containing all the path subfolders.
+     * @author Skazza
+     */
+    private function getSubFolders($path = '')
+    {
+        /** @var \League\Flysystem\StorageAttributes $value */
+        return $this->filesystem->listContents($path)->filter(fn($value) => $value->isDir())->toArray();
     }
 
     /**
@@ -100,10 +100,10 @@ class Hooker
         $filesystem = $this->filesystem;
         $fileName = $folder . DIRECTORY_SEPARATOR . config('hooker.config_name') . '.' . config('hooker.config_format'); /* Build the complete path + filename */
 
-        if(!$filesystem->has($fileName)) /* If it's not there, exit */
+        if (!$filesystem->has($fileName)) /* If it's not there, exit */
             return null;
 
-        if(env('USE_CACHE'))
+        if (env('USE_CACHE'))
             return cache()->remember(sha1($fileName), config('wp_modular.cache.expires'), function () use ($filesystem, $fileName) {
                 return $this->parseYaml($filesystem->read($fileName));
             });

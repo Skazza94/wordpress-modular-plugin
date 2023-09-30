@@ -6,10 +6,11 @@
  *
  * @author Skazza
  */
+
 namespace WPModular\Foundation\Hooker;
 
-use WPModular\Modules\ModuleDispatcher;
 use WPModular\Contracts\Hooker\HookerContract;
+use WPModular\Modules\ModuleDispatcher;
 use WPModular\Modules\ModuleRegisterer;
 
 abstract class Hook implements HookerContract
@@ -25,21 +26,11 @@ abstract class Hook implements HookerContract
     public function hookModule($data)
     {
         $data['handler'] = (!array_key_exists('handler', $data)) ? null : $data['handler']; /* For ResourceHook */
-        
+
         $handler = $this->parseHandler($data['handler'], $data['namespace']);
 
         $this->hookSpecific($data, $handler);
     }
-
-    /**
-     * Handles specific data of the hooker type and calls the WordPress registerer function.
-     *
-     * @param array $data YAML data of the hook.
-     * @param string|array $handler Already parsed handler function.
-     * @return boolean If everything as been hooked or not.
-     * @author Skazza
-     */
-    protected abstract function hookSpecific($data, $handler);
 
     /**
      * Parses the handler, if it's a single element array nothing is done and the first value is returned.
@@ -53,14 +44,24 @@ abstract class Hook implements HookerContract
      */
     protected function parseHandler($handler, $namespace)
     {
-        if(is_null($handler) || empty($handler))
+        if (is_null($handler) || empty($handler))
             return null;
 
-        if(array_key_exists('class', $handler) && array_key_exists('method', $handler)) { /* This is a ("ControllerName", "method") type */
-            $id = app()->singleton(ModuleRegisterer::class)->registerModule($namespace . '\\' . $handler['class'], (array_key_exists('properties', $handler)) ? $handler['properties'] : array());
-            return array(ModuleDispatcher::class, $id . '~' . $handler['method']);
+        if (array_key_exists('class', $handler) && array_key_exists('method', $handler)) { /* This is a ("ControllerName", "method") type */
+            $id = app()->singleton(ModuleRegisterer::class)->registerModule($namespace . '\\' . $handler['class'], (array_key_exists('properties', $handler)) ? $handler['properties'] : []);
+            return [ModuleDispatcher::class, $id . '~' . $handler['method']];
         }
 
         return $handler['function'];
     }
+
+    /**
+     * Handles specific data of the hooker type and calls the WordPress registerer function.
+     *
+     * @param array $data YAML data of the hook.
+     * @param string|array $handler Already parsed handler function.
+     * @return boolean If everything as been hooked or not.
+     * @author Skazza
+     */
+    protected abstract function hookSpecific($data, $handler);
 }

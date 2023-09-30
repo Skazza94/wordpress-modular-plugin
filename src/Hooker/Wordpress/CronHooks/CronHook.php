@@ -20,17 +20,17 @@ class CronHook extends ActionHook
     {
         $status = parent::hookSpecific($data, $handler);
 
-        if(!$status)
+        if (!$status)
             return false;
 
-        foreach($data['tags'] as $hook) {
-            if(!array_key_exists('tag', $hook) || empty($hook['tag']))
+        foreach ($data['tags'] as $hook) {
+            if (!array_key_exists('tag', $hook) || empty($hook['tag']))
                 continue;
 
-            if(!array_key_exists('interval', $hook) || empty($hook['interval']))
+            if (!array_key_exists('interval', $hook) || empty($hook['interval']))
                 continue;
 
-            app()->singleton(CronManager::class)->registerCronEvent((string) $hook['tag'], (string) $hook['interval']);
+            app()->singleton(CronManager::class)->registerCronEvent((string)$hook['tag'], (string)$hook['interval']);
         }
 
         return true;

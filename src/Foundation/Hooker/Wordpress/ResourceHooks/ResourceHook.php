@@ -5,6 +5,7 @@
  *
  * @author Skazza
  */
+
 namespace WPModular\Foundation\Hooker\Wordpress\ResourceHooks;
 
 use WPModular\Foundation\Hooker\Hook;
@@ -38,24 +39,24 @@ abstract class ResourceHook extends Hook
      */
     protected function hookSpecific($data, $handler)
     {
-        if(!array_key_exists('id', $data) || empty($data['id'])) /* If no id is defined, exit */
+        if (!array_key_exists('id', $data) || empty($data['id'])) /* If no id is defined, exit */
             return false;
-        $id = (string) $data['id'];
+        $id = (string)$data['id'];
 
-        if(!array_key_exists('url', $data) || empty($data['url'])) /* If there's no url for the resource, exit */
+        if (!array_key_exists('url', $data) || empty($data['url'])) /* If there's no url for the resource, exit */
             return false;
 
-        $remote = (array_key_exists('remote', $data)) ? (bool) $data['remote'] : false;
+        $remote = (array_key_exists('remote', $data)) ? (bool)$data['remote'] : false;
 
-        $url = (!$remote) ? plugins_url(config('wp_modular.plugin_slug') . DIRECTORY_SEPARATOR . ((string) $data['url'])) : $data['url']; /* Build complete url for the resource */
+        $url = (!$remote) ? plugins_url(config('wp_modular.plugin_slug') . DIRECTORY_SEPARATOR . ((string)$data['url'])) : $data['url']; /* Build complete url for the resource */
 
         /* If there are dependecies, get the array, if not default empty array. */
-        $dependencies = (array_key_exists('dependencies', $data)) ? array_filter(array_unique($data['dependencies'])) : array();
+        $dependencies = (array_key_exists('dependencies', $data)) ? array_filter(array_unique($data['dependencies'])) : [];
 
-        $pages = (array_key_exists('pages', $data) && !empty($data['pages'])) ? array_filter(array_unique($data['pages'])) : array('wp');
-        foreach($pages as $page) {
+        $pages = (array_key_exists('pages', $data) && !empty($data['pages'])) ? array_filter(array_unique($data['pages'])) : ['wp'];
+        foreach ($pages as $page) {
             $page = ($page === 'frontend') ? 'wp' : $page;
-            if(!in_array($page, array('wp', 'login', 'admin'))) /* Can be only one of those 3 values */
+            if (!in_array($page, ['wp', 'login', 'admin'])) /* Can be only one of those 3 values */
                 continue;
 
             $this->callWPRegisterer($id, $url, $dependencies, $page, $data); /* Call the real WordPress function to register this action */

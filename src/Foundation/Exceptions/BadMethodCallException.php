@@ -3,4 +3,5 @@
 namespace WPModular\Foundation\Exceptions;
 
 class BadMethodCallException extends \BadMethodCallException
-{}
+{
+}

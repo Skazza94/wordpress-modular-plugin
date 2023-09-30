@@ -17,7 +17,7 @@ class DotAdapter implements EnvironmentContract
 
     public function load()
     {
-        $dotenv = new Dotenv($this->path);
+        $dotenv = Dotenv::createImmutable($this->path);
         $dotenv->load();
     }
 
@@ -25,17 +25,12 @@ class DotAdapter implements EnvironmentContract
     {
         return env_get($key);
     }
-
-    public function set($key, $value)
-    {
-        putenv("{$key}={$value}");
-    }
 }
 
 if (!function_exists('env_get')) {
     function env_get($key, $default = null)
     {
-        $value = getenv($key);
+        $value = $_ENV[$key];
 
         if ($value === false)
             return $default;

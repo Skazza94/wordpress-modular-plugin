@@ -2,8 +2,8 @@
 
 namespace WPModular\Foundation\Modules;
 
-use League\Flysystem\Adapter\Local;
 use League\Flysystem\Filesystem;
+use League\Flysystem\Local\LocalFilesystemAdapter;
 use WPModular\Contracts\ApplicationContext\ApplicationContextContract;
 use WPModular\Hooker\Hooker;
 
@@ -20,7 +20,7 @@ abstract class ModuleProvider
     {
         $namespace = $this->usesNamespace();
         $folder = new Filesystem(
-            new Local(
+            new LocalFilesystemAdapter(
                 $this->usesFolder()
             )
         );
@@ -29,11 +29,13 @@ abstract class ModuleProvider
 
         $this->app->create(
             Hooker::class,
-            array('namespace' => $namespace, 'filesystem' => $folder)
+            ['namespace' => $namespace, 'filesystem' => $folder]
         )->hookModules();
     }
 
-    abstract public function register();
     abstract public function usesNamespace();
+
     abstract public function usesFolder();
+
+    abstract public function register();
 }

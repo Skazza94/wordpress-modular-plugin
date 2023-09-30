@@ -1,4 +1,5 @@
 <?php
+
 namespace WPModular\View\Factories;
 
 use WPModular\Foundation\Factories\Factory;

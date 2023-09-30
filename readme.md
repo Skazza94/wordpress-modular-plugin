@@ -55,7 +55,7 @@ Sounds awesome, right? But there's much more to tell you, so here's the Features
             - You can hook it into your own plugin only specifing the ModuleProvider class in a configuration file!
   4. A lot of built-in and useful Services:
         1. **Cache**, based on Symfony's [Cache](https://github.com/symfony/cache).
-        2. **Config**, based on Zend's [Config](https://github.com/zendframework/zend-config).
+        2. **Config**, based on [Laminas Config](https://github.com/laminas/laminas-config).
             1. Simplified method to access values using a "dotted notation":
                 - For example, ``my_config_file.first_value.second_value``.
         3. **Environment** (to handle plugin constants), based on [DotEnv](https://github.com/vlucas/phpdotenv).
@@ -66,7 +66,7 @@ Sounds awesome, right? But there's much more to tell you, so here's the Features
             2. Can be accessed to get translations easily.
         6. **Url**, build/parse and get URLs for locations.
         7. **View**, with multiple choices for views rendering:
-            1. A robust template engine using [Twig 1.x](http://twig.sensiolabs.org/doc/1.x/) and [Timber](https://github.com/timber/timber) (for WP support).
+            1. A robust template engine using [Twig](https://twig.symfony.com/doc/3.x/) and [Timber](https://github.com/timber/timber).
             2. Plain HTML and PHP files support (with no template engines).   
   6. Helper functions to access Services functions in an easy way, for example:
         - ``config($key)`` to get a configuration value from a configuration file.

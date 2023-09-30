@@ -7,5 +7,6 @@ use WPModular\Foundation\Services\Service;
 class Module extends Service
 {
     public function bootstrap()
-    {}
+    {
+    }
 }

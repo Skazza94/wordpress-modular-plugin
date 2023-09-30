@@ -11,6 +11,7 @@
  *
  * @author Skazza
  */
+
 namespace WPModular\Modules;
 
 class ModuleDispatcher
@@ -28,14 +29,14 @@ class ModuleDispatcher
     public static function __callStatic($method, $args)
     {
         list($containerObjectId, $methodName) = array_filter(explode('~', $method, 2), 'strlen'); /* Sanity checking */
-        if(is_null($containerObjectId) || is_null($methodName))
+        if (is_null($containerObjectId) || is_null($methodName))
             return null;
 
         $obj = app($containerObjectId);
-        if(is_null($obj)) return null;
+        if (is_null($obj)) return null;
 
-        if(method_exists($obj, $methodName)) /* If the method is declared into the object, call it. */
-            return call_user_func_array(array($obj, $methodName), $args);
+        if (method_exists($obj, $methodName)) /* If the method is declared into the object, call it. */
+            return call_user_func_array([$obj, $methodName], $args);
 
         return null; /* Return null if not defined */
     }
