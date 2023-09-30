@@ -37,7 +37,7 @@ class Hooker
 
         /* Iterates over them */
         foreach ($flatten as $folder) {
-            $hooks = $this->readConfigFile($folder['path']); /* Read the config file into the "modules" subfolder */
+            $hooks = $this->readConfigFile($folder->path()); /* Read the config file into the "modules" subfolder */
 
             if (is_null($hooks))
                 continue;
