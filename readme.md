@@ -4,7 +4,7 @@ Core of WordPress Modular Plugin (or **WPM**).
 ## Requirements
 This is a Composer library and you need to include it into a "plugin" project. 
 
-Boilerplate project can be found [here](https://github.com/Skazzino/wpm-boilerplate-plugin). 
+Boilerplate project can be found [here](https://github.com/Skazza94/wpm-boilerplate-plugin). 
 
 You need to install [Composer](https://getcomposer.org/) before using this repository. On Ubuntu, you can use:
 ```
@@ -27,8 +27,8 @@ So, I've decided to try something new.
 This framework is based on the idea of "module", something that can be added/removed without compromising other plugin 
 functionalities. 
 
-For example, you have an *Admin* module and an *User* module, if you don't need the *User* module anymore, you
-should be able to remove it without touching nothing in other plugin files or even in the *Admin* module.
+For example, you have a `Admin` module and a `User` module, if you don't need the `User` module anymore, you
+should be able to remove it without touching nothing in other plugin files or even in the `Admin` module.
 
 To achieve this, all WordPress actions/filters/shortcodes/etc. should be defined in a dichiarative way, using an OOP approach.
 So, in WPM, you can add/remove your module simply adding/removing a subfolder. You can also re-use some modules in other plugins
@@ -54,30 +54,27 @@ Sounds awesome, right? But there's much more to tell you, so here's the Features
             - For example, you can create a Composer Package (which is an WPM Module);
             - You can hook it into your own plugin only specifing the ModuleProvider class in a configuration file!
   4. A lot of built-in and useful Services:
-        1. **Cache**, based on Symfony's [Cache](https://github.com/symfony/cache).
+        1. **Cache**, based on [Symfony Cache](https://github.com/symfony/cache).
         2. **Config**, based on [Laminas Config](https://github.com/laminas/laminas-config).
-            1. Simplified method to access values using a "dotted notation":
-                - For example, ``my_config_file.first_value.second_value``.
+            1. Simplified method to access values using a dotted notation (inspired by Laravel):
+                - For example, `my_config_file.first_value.second_value`.
         3. **Environment** (to handle plugin constants), based on [DotEnv](https://github.com/vlucas/phpdotenv).
         4. **Filesystem**, a good FS abstraction using [Flysystem](https://github.com/thephpleague/flysystem).
             1. Easily declare a new Filesystem using a configuration file.
         5. **L10n**, abstraction from WordPress localization. 
-            1. Registers the plugin text domain 
+            1. Registers the plugin text domain.
             2. Can be accessed to get translations easily.
         6. **Url**, build/parse and get URLs for locations.
         7. **View**, with multiple choices for views rendering:
             1. A robust template engine using [Twig](https://twig.symfony.com/doc/3.x/) and [Timber](https://github.com/timber/timber).
             2. Plain HTML and PHP files support (with no template engines).   
   6. Helper functions to access Services functions in an easy way, for example:
-        - ``config($key)`` to get a configuration value from a configuration file.
-        - ``storage($name)`` to get a filesystem.
-        - ``app($serviceName)`` to get a Service from the Application Context.
+        - `config($key)` to get a configuration value from a configuration file.
+        - `storage($name)` to get a filesystem.
+        - `app($serviceName)` to get a Service from the Application Context.
         
 ## Wiki
 [Wiki](https://github.com/Skazzino/wpm-boilerplate-plugin/wiki) can be found in the boilerplate project, and will help you to know how to build Modules and use Services.
   
 ## What's missing
 - [ ] All Flysystem drivers implemented into ``FilesystemManager``
-- [x] Use Cache Flag for more Services if possible
-- [ ] Better code comments
-- [ ] Other?
