@@ -13,12 +13,12 @@ class L10nService extends Service
 
     public function bootstrap()
     {
-        add_action('plugins_loaded', array($this, 'loadPluginLanguageDomain'));
+        add_action('plugins_loaded', [$this, 'loadPluginLanguageDomain']);
 
         $this->addMixin(
             $this->app->create(
                 TranslationManager::class,
-                array('textDomain' => config('wp_modular.plugin_name'))
+                ['textDomain' => config('wp_modular.plugin_name')]
             )
         );
     }

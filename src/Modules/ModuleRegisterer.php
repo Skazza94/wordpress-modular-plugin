@@ -4,7 +4,7 @@ namespace WPModular\Modules;
 
 class ModuleRegisterer
 {
-    public function registerModule($name, $properties = array())
+    public function registerModule($name, $properties = [])
     {
         $id = $this->generateId($name, $properties);
         $this->registerInAppContext($id, $name, $properties);
@@ -20,7 +20,7 @@ class ModuleRegisterer
     private function registerInAppContext($id, $name, $properties)
     {
         $app = app();
-        $properties += array('app' => $app);
+        $properties += ['app' => $app];
 
         $app->singleton($name, $id, $properties);
     }

@@ -5,11 +5,10 @@
  *
  * @author Skazza
  */
+
 namespace WPModular\Foundation\Hooker\Wordpress\FunctionHooks;
 
-use WPModular\Cron\CronManager;
 use WPModular\Foundation\Hooker\Hook;
-use WPModular\Hooker\Wordpress\FunctionHooks\ActionHook;
 
 abstract class FunctionHook extends Hook
 {
@@ -25,19 +24,19 @@ abstract class FunctionHook extends Hook
      */
     protected function hookSpecific($data, $handler)
     {
-        if(is_null($handler))
+        if (is_null($handler))
             return false;
 
-        if(!array_key_exists('tags', $data) || empty($data['tags'])) /* If there are no WP tags, this can't be hooked */
+        if (!array_key_exists('tags', $data) || empty($data['tags'])) /* If there are no WP tags, this can't be hooked */
             return false;
 
-        foreach($data['tags'] as $hook) { /* Iterate over WP tags */
-            if(!array_key_exists('tag', $hook) || empty($hook['tag'])) /* If empty, skip */
+        foreach ($data['tags'] as $hook) { /* Iterate over WP tags */
+            if (!array_key_exists('tag', $hook) || empty($hook['tag'])) /* If empty, skip */
                 continue;
-            $tag = (string) $hook['tag'];
+            $tag = (string)$hook['tag'];
 
-            $priority = (array_key_exists('priority', $hook) && !empty($hook['priority'])) ? (int) $hook['priority'] : 10; /* Read the priority, if it's defined. If not set default value to 10. */
-            $args = (array_key_exists('args', $hook) && !empty($hook['args'])) ? (int) $hook['args'] : 1; /* Read the arguments to pass to the function, if it's defined. If not set default value to 1. */
+            $priority = (array_key_exists('priority', $hook) && !empty($hook['priority'])) ? (int)$hook['priority'] : 10; /* Read the priority, if it's defined. If not set default value to 10. */
+            $args = (array_key_exists('args', $hook) && !empty($hook['args'])) ? (int)$hook['args'] : 1; /* Read the arguments to pass to the function, if it's defined. If not set default value to 1. */
 
             $this->callWPRegisterer($tag, $handler, $priority, $args); /* Call the real WordPress function to register this action */
         }

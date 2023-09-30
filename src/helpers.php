@@ -1,6 +1,6 @@
 <?php
 
-if(!function_exists('app')) {
+if (!function_exists('app')) {
     /**
      * @param string $key
      * @return mixed
@@ -17,7 +17,7 @@ if(!function_exists('app')) {
     }
 }
 
-if(!function_exists('cache')) {
+if (!function_exists('cache')) {
     /**
      * @return \WPModular\Cache\CacheService
      */
@@ -27,7 +27,7 @@ if(!function_exists('cache')) {
     }
 }
 
-if(!function_exists('config')) {
+if (!function_exists('config')) {
     /**
      * @return mixed
      */
@@ -37,14 +37,14 @@ if(!function_exists('config')) {
     }
 }
 
-if(!function_exists('add_cron_interval')) {
+if (!function_exists('add_cron_interval')) {
     function add_cron_interval($name, $minutes)
     {
         app()->singleton(\WPModular\Cron\CronManager::class)->addCronInterval($name, $minutes);
     }
 }
 
-if(!function_exists('env')) {
+if (!function_exists('env')) {
     /**
      * @return string
      */
@@ -54,7 +54,7 @@ if(!function_exists('env')) {
     }
 }
 
-if(!function_exists('storage')) {
+if (!function_exists('storage')) {
     /**
      * @return \League\Flysystem\Filesystem
      */
@@ -64,7 +64,7 @@ if(!function_exists('storage')) {
     }
 }
 
-if(!function_exists('localize')) {
+if (!function_exists('localize')) {
     /**
      * @return string
      */
@@ -74,7 +74,7 @@ if(!function_exists('localize')) {
     }
 }
 
-if(!function_exists('url')) {
+if (!function_exists('url')) {
     /**
      * @return \WPModular\Support\Url\UrlService
      */
@@ -84,11 +84,11 @@ if(!function_exists('url')) {
     }
 }
 
-if(!function_exists('render')) {
+if (!function_exists('render')) {
     /**
      * @return string
      */
-    function render($viewName, $params = array(), $print = true, $overrideCache = false)
+    function render($viewName, $params = [], $print = true, $overrideCache = false)
     {
         return app('view')->render($viewName, $params, $print, $overrideCache);
     }

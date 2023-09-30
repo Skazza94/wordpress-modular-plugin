@@ -7,7 +7,6 @@ use WPModular\Foundation\Services\Service;
 
 /**
  * @method string get(string $key)
- * @method set(string $key, string $value)
  */
 class EnvironmentService extends Service
 {
@@ -16,7 +15,7 @@ class EnvironmentService extends Service
         $this->addMixin(
             $this->app->create(
                 DotAdapter::class,
-                array('path' => $this->app->getRootPath())
+                ['path' => $this->app->getRootPath()]
             )
         );
     }

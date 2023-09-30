@@ -1,4 +1,5 @@
 <?php
+
 namespace WPModular\Cache;
 
 use WPModular\Foundation\Services\Service;
@@ -8,9 +9,6 @@ use WPModular\Foundation\Services\Service;
  * @method set(string $key, $value, $ttl = null)
  * @method delete(string $key)
  * @method clear()
- * @method array getMultiple(array $keys, $default = null)
- * @method setMultiple(array $values, $ttl = null)
- * @method deleteMultiple(array $keys)
  * @method has(string $key)
  * @method remember(string $key, $ttl, callable $callback)
  */
@@ -21,7 +19,7 @@ class CacheService extends Service
         $this->addMixin(
             $this->app->create(
                 CacheManager::class,
-                array('rootPath' => $this->app->getRootPath())
+                ['rootPath' => $this->app->getRootPath()]
             )
         );
     }

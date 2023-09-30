@@ -7,7 +7,7 @@ use WPModular\View\Factories\ViewAdapterFactory;
 class ViewDispatcher
 {
     private $VIEW_PATH = null;
-    private $adapters = array();
+    private $adapters = [];
     private $supported = null;
 
     public function __construct($rootPath)
@@ -18,25 +18,25 @@ class ViewDispatcher
         $this->VIEW_PATH = $rootPath . $configs['path'] . DIRECTORY_SEPARATOR;
     }
 
-    public function render($viewName, $params = array(), $print = true, $overrideCache = false)
+    public function render($viewName, $params = [], $print = true, $overrideCache = false)
     {
         $tokens = explode('/', $viewName);
         $fileName = array_pop($tokens);
         $ext = pathinfo($fileName, PATHINFO_EXTENSION);
 
-        if(!in_array($ext, $this->supported))
+        if (!in_array($ext, $this->supported))
             return null;
 
         $path = implode('/', $tokens);
 
-        if(env('USE_CACHE') && !$overrideCache)
-            $out = cache()->remember(sha1($viewName), config('wp_modular.cache.expires'), function() use ($ext, $fileName, $path, $params) {
+        if (env('USE_CACHE') && !$overrideCache)
+            $out = cache()->remember(sha1($viewName), config('wp_modular.cache.expires'), function () use ($ext, $fileName, $path, $params) {
                 return $this->renderByType($ext, $fileName, $path, $params);
             });
         else
             $out = $this->renderByType($ext, $fileName, $path, $params);
 
-        if($print)
+        if ($print)
             echo $out;
 
         return $out;
@@ -44,7 +44,7 @@ class ViewDispatcher
 
     private function renderByType($type, $viewName, $prefix, $params)
     {
-        if(!array_key_exists($type, $this->adapters))
+        if (!array_key_exists($type, $this->adapters))
             $this->adapters[$type] = $this->create($type);
 
         return (!is_null($this->adapters[$type])) ? $this->adapters[$type]->render($viewName, $prefix, $params) : null;
@@ -52,6 +52,6 @@ class ViewDispatcher
 
     private function create($type)
     {
-        return app()->singleton(ViewAdapterFactory::class)->create($type, array('viewPath' => $this->VIEW_PATH));
+        return app()->singleton(ViewAdapterFactory::class)->create($type, ['viewPath' => $this->VIEW_PATH]);
     }
 }

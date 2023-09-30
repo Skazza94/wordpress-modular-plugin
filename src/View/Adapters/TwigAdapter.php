@@ -2,7 +2,7 @@
 
 namespace WPModular\View\Adapters;
 
-use \Timber\Timber;
+use Timber\Timber;
 use WPModular\Foundation\View\ViewAdapter;
 
 class TwigAdapter extends ViewAdapter
@@ -13,17 +13,17 @@ class TwigAdapter extends ViewAdapter
         Timber::$locations = $this->VIEW_PATH;
     }
 
-    public function render($viewName, $prefix = '', $params = array())
+    public function render($viewName, $prefix = '', $params = [])
     {
         $context = array_merge(
             Timber::get_context(),
             $params,
-            array(
+            [
                 'cache' => cache(),
                 'env' => app('env'),
                 'l10n' => app('l10n'),
                 'url' => url()
-            )
+            ]
         );
         return Timber::fetch($this->buildPrefix($prefix) . $viewName, $context);
     }

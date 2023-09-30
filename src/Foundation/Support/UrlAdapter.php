@@ -6,9 +6,9 @@ use WPModular\Contracts\Support\UrlContract;
 
 abstract class UrlAdapter implements UrlContract
 {
-    public function buildUrl($parts, $additionalQueryParams = array(), $additionalPathParams = array())
+    public function buildUrl($parts, $additionalQueryParams = [], $additionalPathParams = [])
     {
-        if(!is_array($parts))
+        if (!is_array($parts))
             $parts = $this->parseUrl($parts);
 
         $parts['query'] = $this->addQueryParameters($parts, $additionalQueryParams);
@@ -27,9 +27,9 @@ abstract class UrlAdapter implements UrlContract
 
     private function addQueryParameters($parts, $additional)
     {
-        $query = array();
-        if(isset($parts['query'])) {
-            if(!is_array($parts['query']))
+        $query = [];
+        if (isset($parts['query'])) {
+            if (!is_array($parts['query']))
                 parse_str($parts['query'], $query);
             else
                 $query = $parts['query'];
@@ -41,8 +41,8 @@ abstract class UrlAdapter implements UrlContract
 
     private function addPathParameters($parts, $additional)
     {
-        $path = array();
-        if(isset($parts['path']))
+        $path = [];
+        if (isset($parts['path']))
             $path = explode('/', $parts['path']);
 
         $path = array_merge($path, $additional);

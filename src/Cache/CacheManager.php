@@ -1,7 +1,8 @@
 <?php
+
 namespace WPModular\Cache;
 
-use Symfony\Component\Cache\Simple\FilesystemCache;
+use Symfony\Component\Cache\Adapter\FilesystemAdapter;
 use WPModular\Contracts\Cache\CacheContract;
 
 class CacheManager implements CacheContract
@@ -11,21 +12,11 @@ class CacheManager implements CacheContract
     public function __construct($rootPath)
     {
         $configs = config('wp_modular.cache');
-        $this->cache = new FilesystemCache(
+        $this->cache = new FilesystemAdapter(
             $configs['namespace'],
             $configs['ttl'],
             $rootPath . DIRECTORY_SEPARATOR . $configs['path']
         );
-    }
-
-    public function get($key, $default = null)
-    {
-        return $this->cache->get($key, $default);
-    }
-
-    public function set($key, $value, $ttl = null)
-    {
-        return $this->cache->set($key, $value, $ttl);
     }
 
     public function delete($key)
@@ -38,31 +29,34 @@ class CacheManager implements CacheContract
         return $this->cache->clear();
     }
 
-    public function getMultiple($keys, $default = null)
+    public function remember($key, $ttl, callable $callback)
     {
-        return $this->cache->getMultiple($keys, $default);
-    }
+        if (!$this->has($key))
+            $this->set($key, $callback(), $ttl * 60);
 
-    public function setMultiple($values, $ttl = null)
-    {
-        $this->cache->setMultiple($values, $ttl);
-    }
-
-    public function deleteMultiple($keys)
-    {
-        return $this->cache->deleteMultiple($keys);
+        return $this->get($key);
     }
 
     public function has($key)
     {
-        return $this->cache->has($key);
+        $item = $this->cache->getItem($key);
+        return $item->isHit();
     }
 
-    public function remember($key, $ttl, callable $callback)
+    public function set($key, $value, $ttl = null)
     {
-        if(!$this->has($key))
-            $this->set($key, $callback(), $ttl * 60);
+        $item = $this->cache->getItem($key);
+        $item->set($value);
+        $item->expiresAfter($ttl);
 
-        return $this->get($key);
+        $this->cache->save($item);
+
+        return $value;
+    }
+
+    public function get($key, $default = null)
+    {
+        $item = $this->cache->getItem($key);
+        return $item->isHit() ? $item->get() : $default;
     }
 }

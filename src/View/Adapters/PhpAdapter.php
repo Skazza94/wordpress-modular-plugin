@@ -6,9 +6,9 @@ use WPModular\Foundation\View\ViewAdapter;
 
 class PhpAdapter extends ViewAdapter
 {
-    public function render($viewName, $prefix = '', $params = array())
+    public function render($viewName, $prefix = '', $params = [])
     {
-        if(!empty($params))
+        if (!empty($params))
             extract($params);
 
         ob_start();

@@ -4,6 +4,7 @@
  *
  * @author Skazza
  */
+
 namespace WPModular\Hooker\Wordpress\ResourceHooks;
 
 use WPModular\Foundation\Hooker\Wordpress\ResourceHooks\ResourceHook;
@@ -23,8 +24,8 @@ class StyleHook extends ResourceHook
      */
     protected function callWPRegisterer($id, $url, $dependencies, $page, $data)
     {
-        $media = (array_key_exists('media', $data) || empty($data['media'])) ? 'all' : (string) $data['media']; /* If media tag is declared, read its value. If not set default to 'all'. */
-        add_action($page . '_enqueue_scripts', function() use ($id, $url, $dependencies, $media) { /* We need to enqueue the style into the 'wp_enqueue_scripts' action! */
+        $media = (array_key_exists('media', $data) || empty($data['media'])) ? 'all' : (string)$data['media']; /* If media tag is declared, read its value. If not set default to 'all'. */
+        add_action($page . '_enqueue_scripts', function () use ($id, $url, $dependencies, $media) { /* We need to enqueue the style into the 'wp_enqueue_scripts' action! */
             wp_enqueue_style($id, $url, $dependencies, $this->VERSION, $media);
         });
     }

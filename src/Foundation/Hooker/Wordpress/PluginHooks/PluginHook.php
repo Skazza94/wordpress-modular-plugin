@@ -5,6 +5,7 @@
  *
  * @author Skazza
  */
+
 namespace WPModular\Foundation\Hooker\Wordpress\PluginHooks;
 
 use WPModular\Foundation\Hooker\Hook;

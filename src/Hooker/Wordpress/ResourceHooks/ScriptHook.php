@@ -4,6 +4,7 @@
  *
  * @author Skazza
  */
+
 namespace WPModular\Hooker\Wordpress\ResourceHooks;
 
 use WPModular\Foundation\Hooker\Wordpress\ResourceHooks\ResourceHook;
@@ -23,8 +24,8 @@ class ScriptHook extends ResourceHook
      */
     protected function callWPRegisterer($id, $url, $dependencies, $page, $data)
     {
-        $infooter = (!array_key_exists('infooter', $data) || empty($data['infooter'])) ? false : (bool) $data['infooter']; /* If infooter tag is declared, read its value. If not set default to false. */
-        add_action($page . '_enqueue_scripts', function() use ($id, $url, $dependencies, $infooter) { /* We need to enqueue the script into the 'wp_enqueue_scripts' action! */
+        $infooter = (!array_key_exists('infooter', $data) || empty($data['infooter'])) ? false : (bool)$data['infooter']; /* If infooter tag is declared, read its value. If not set default to false. */
+        add_action($page . '_enqueue_scripts', function () use ($id, $url, $dependencies, $infooter) { /* We need to enqueue the script into the 'wp_enqueue_scripts' action! */
             wp_enqueue_script($id, $url, $dependencies, $this->VERSION, $infooter);
         });
     }
