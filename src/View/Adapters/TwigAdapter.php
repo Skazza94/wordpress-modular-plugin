@@ -22,7 +22,7 @@ class TwigAdapter extends ViewAdapter
                 'cache' => cache(),
                 'env' => app('env'),
                 'l10n' => app('l10n'),
-                'url' => url()
+                'wp_url' => url()
             ]
         );
         return Timber::fetch($this->buildPrefix($prefix) . $viewName, $context);
