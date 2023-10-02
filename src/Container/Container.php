@@ -17,8 +17,7 @@ class Container implements ContainerContract
 
     public function register($id, $className, $arguments, $needsSingleton = false)
     {
-        $definition = $this->container->register($id, $className)
-            ->setLazy(true);
+        $definition = $this->container->register($id, $className);
 
         $resolvedArgs = $this->resolveClassConstructorArguments($className, $arguments, $needsSingleton);
 
