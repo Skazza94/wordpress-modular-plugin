@@ -16,15 +16,15 @@
         }
     ],
     "require": {
-        "php": "^8.0",
+        "php": "^7.4",
         "gnugat/nomo-spaco": "^0.4.3",
         "guzzlehttp/guzzle": "^7.8",
-        "laminas/laminas-config": "^3.9",
-        "league/flysystem": "^3.16",
-        "symfony/cache": "^6.3",
-        "symfony/dependency-injection": "^6.3",
-        "symfony/proxy-manager-bridge": "^6.3",
-        "symfony/yaml": "^6.3",
+        "laminas/laminas-config": "^3.7",
+        "league/flysystem": "^2.5",
+        "symfony/cache": "^5.4",
+        "symfony/dependency-injection": "^5.4",
+        "symfony/proxy-manager-bridge": "^5.4",
+        "symfony/yaml": "^5.4",
         "timber/timber": "^1.22",
         "twig/twig": "^3.7.1",
         "vlucas/phpdotenv": "^5.5.0"

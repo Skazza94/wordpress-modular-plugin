@@ -2,7 +2,7 @@
 Core of WordPress Modular Plugin (or **WPM**).
 
 ## Requirements
-This is a Composer library and you need to include it into a "plugin" project. 
+This is a Composer library, and you need to include it into a "plugin" project. 
 
 Boilerplate project can be found [here](https://github.com/Skazza94/wpm-boilerplate-plugin). 
 
@@ -10,6 +10,8 @@ You need to install [Composer](https://getcomposer.org/) before using this repos
 ```
 sudo apt-get install composer
 ```
+
+Minimum version of PHP supported is **7.4**.
 
 ## Contribute
 Your help is essential to make WPM even better. 
