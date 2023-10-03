@@ -100,7 +100,7 @@ class Hooker
         $filesystem = $this->filesystem;
         $fileName = $folder . DIRECTORY_SEPARATOR . config('hooker.config_name') . '.' . config('hooker.config_format'); /* Build the complete path + filename */
 
-        if (!$filesystem->has($fileName)) /* If it's not there, exit */
+        if (!$filesystem->fileExists($fileName)) /* If it's not there, exit */
             return null;
 
         if (env('USE_CACHE'))
